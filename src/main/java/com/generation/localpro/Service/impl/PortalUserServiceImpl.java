@@ -2,8 +2,10 @@ package com.generation.localpro.Service.impl;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.localpro.Service.PortalUserService;
 import com.generation.localpro.exception.ResourceNotFoundException;
@@ -23,6 +25,9 @@ public class PortalUserServiceImpl implements PortalUserService {
 
     @Override
     public PortalUser create(PortalUser portalUser) {
+         if (portalUser.getEmail() != null && !portalUserRepository.findByEmail(portalUser.getEmail()).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email " + portalUser.getEmail() + " already in use");
+        }
         return portalUserRepository.save(portalUser);
     }
 

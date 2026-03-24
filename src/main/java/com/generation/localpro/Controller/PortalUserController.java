@@ -38,6 +38,7 @@ public class PortalUserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PortalUserDTO create(@Valid @RequestBody PortalUserDTO portalUserDto) {
+        portalUserDto.setId(0);
         PortalUser created = portalUserService.create(portalUserMapper.toEntity(portalUserDto));
         return portalUserMapper.toDto(created);
     }
