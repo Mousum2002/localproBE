@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ReviewDTO {
 
-    private int id;
+    private Integer id;
 
     @NotNull(message = "L'ID dell'utente recensito è obbligatorio")
     private Integer userId;
@@ -27,6 +27,4 @@ public class ReviewDTO {
     @NotBlank(message = "La descrizione della recensione non può essere vuota")
     private String description;
     
-    // Campi extra utili per il Frontend
-    private String userFullName; // Per mostrare subito chi è stato recensito
 }

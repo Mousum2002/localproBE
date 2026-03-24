@@ -15,8 +15,6 @@ public class ReviewMapper {
             .userId(entity.getUser() != null ? entity.getUser().getId() : null)
             .rating(entity.getRating())
             .description(entity.getDescription())
-            .userFullName(entity.getUser() != null ? 
-                entity.getUser().getFirstName() + " " + entity.getUser().getLastName() : null)
             .build();
     }
 
