@@ -25,14 +25,18 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewRepository.save(review);
     }
 
-    @Override
+   @Override
     public Review update(Integer id, Review review) {
-        Review existing = getById(id);
-        existing.setUserId(review.getUserId());
-        existing.setRating(review.getRating());
-        existing.setDescription(review.getDescription());
-        return reviewRepository.save(existing);
-    }
+    Review existing = getById(id);
+    
+    // CORREZIONE: usa l'oggetto PortalUser, non l'ID numerico
+    existing.setUser(review.getUser()); 
+    
+    existing.setRating(review.getRating());
+    existing.setDescription(review.getDescription());
+    
+    return reviewRepository.save(existing);
+}
 
     @Override
     @Transactional(readOnly = true)

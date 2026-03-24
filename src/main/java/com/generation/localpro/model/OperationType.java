@@ -33,7 +33,7 @@ public class OperationType {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany(mappedBy = "operationtype", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "operationType", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OperationTypeByVendor> operationsProvided;
 
 }

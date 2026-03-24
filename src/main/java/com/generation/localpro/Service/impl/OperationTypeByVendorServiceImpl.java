@@ -1,7 +1,6 @@
 package com.generation.localpro.Service.impl;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +27,12 @@ public class OperationTypeByVendorServiceImpl implements OperationTypeByVendorSe
     @Override
     public OperationTypeByVendor update(Integer id, OperationTypeByVendor operationTypeByVendor) {
         OperationTypeByVendor existing = getById(id);
-        existing.setVendorId(operationTypeByVendor.getVendorId());
-        existing.setOperationTypeId(operationTypeByVendor.getOperationTypeId());
+        
+        // Aggiorniamo i campi dell'oggetto esistente con i nuovi dati
+        existing.setUser(operationTypeByVendor.getUser());
+        existing.setOperationType(operationTypeByVendor.getOperationType());
         existing.setPrice(operationTypeByVendor.getPrice());
+        
         return operationTypeByVendorRepository.save(existing);
     }
 
@@ -50,7 +52,8 @@ public class OperationTypeByVendorServiceImpl implements OperationTypeByVendorSe
     @Override
     @Transactional(readOnly = true)
     public List<OperationTypeByVendor> getByVendorId(Integer vendorId) {
-        return operationTypeByVendorRepository.findByVendorId(vendorId);
+        // Mappatura: il Service parla di 'Vendor', il Repository cerca nel campo 'User'
+        return operationTypeByVendorRepository.findByUserId(vendorId);
     }
 
     @Override
