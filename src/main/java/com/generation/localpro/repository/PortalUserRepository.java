@@ -16,8 +16,6 @@ public interface PortalUserRepository extends JpaRepository<PortalUser, Integer>
     List<PortalUser> findByCity(String city);
     List<PortalUser> findByAddress(String address);
     List<PortalUser> findByRole(Role role);
-    List<PortalUser> findByBio(String bio);
-    List<PortalUser> findByX(int x);
-    List<PortalUser> findByY(int y);    
+  
 
 }
