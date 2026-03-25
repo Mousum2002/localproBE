@@ -23,12 +23,7 @@ public class PortalUserController {
         this.portalUserMapper = portalUserMapper;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public PortalUserResponseDTO create(@Valid @RequestBody PortalUserRequestDTO requestDto) {
-        PortalUser created = portalUserService.create(portalUserMapper.toEntity(requestDto));
-        return portalUserMapper.toResponseDto(created);
-    }
+   
 
     @PutMapping("/{id}")
     public PortalUserResponseDTO update(@PathVariable Integer id,
