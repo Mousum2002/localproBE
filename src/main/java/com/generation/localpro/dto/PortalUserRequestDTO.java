@@ -2,6 +2,7 @@ package com.generation.localpro.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 
@@ -27,10 +28,15 @@ public class PortalUserRequestDTO {
     @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
     private String password;
 
+    @NotNull(message = "La x è obbligatoria")
+     private Integer  x;
+     @NotNull(message = "La y è obbligatoria")
+    private Integer   y;
+
+
     private String city;
     private String address;
     private List<String> roles;
     private String bio;
-    private Integer  x;
-    private Integer   y;
+   
 }
