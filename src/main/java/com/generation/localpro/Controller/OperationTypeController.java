@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/operation-types")
 public class OperationTypeController {

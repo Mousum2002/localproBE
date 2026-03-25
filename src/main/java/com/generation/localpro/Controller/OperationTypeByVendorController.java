@@ -22,7 +22,7 @@ import com.generation.localpro.model.OperationTypeByVendor;
 
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/vendor-operations")
 public class OperationTypeByVendorController {
