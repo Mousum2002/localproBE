@@ -1,30 +1,19 @@
 package com.generation.localpro.mapper;
 
-import org.springframework.stereotype.Component;
 
 import com.generation.localpro.dto.ReviewDTO;
 import com.generation.localpro.model.Review;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Component
-public class ReviewMapper {
+@Mapper(componentModel = "spring")
+public interface ReviewMapper {
 
-    public ReviewDTO toDto(Review entity) {
-        if (entity == null) return null;
-        return ReviewDTO.builder()
-            .id(entity.getId())
-            .userId(entity.getUser() != null ? entity.getUser().getId() : null)
-            .rating(entity.getRating())
-            .description(entity.getDescription())
-            .build();
-    }
+    @Mapping(source = "user.id", target = "userId")
+    ReviewDTO toDto(Review entity);
 
-    public Review toEntity(ReviewDTO dto) {
-        if (dto == null) return null;
-        Review entity = new Review();
-        entity.setId(dto.getId());
-        entity.setRating(dto.getRating());
-        entity.setDescription(dto.getDescription());
-        // user viene impostato nel Service
-        return entity;
-    }
+    // user is resolved in the Service via repository lookup
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    Review toEntity(ReviewDTO dto);
 }

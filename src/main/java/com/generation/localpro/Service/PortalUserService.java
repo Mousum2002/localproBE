@@ -3,19 +3,47 @@ package com.generation.localpro.Service;
 import java.util.List;
 
 import com.generation.localpro.model.PortalUser;
-import com.generation.localpro.model.Role;
+import org.springframework.stereotype.Service;
 
-public interface PortalUserService {
+import com.generation.localpro.repository.PortalUserRepository;
+import jakarta.persistence.EntityNotFoundException;
 
-    PortalUser create(PortalUser portalUser);
 
-    PortalUser update(Integer id, PortalUser portalUser);
+@Service
+public class PortalUserService {
 
-    PortalUser getById(Integer id);
+    private final PortalUserRepository portalUserRepository;
 
-    List<PortalUser> getAll();
+    public PortalUserService(PortalUserRepository portalUserRepository) {
+        this.portalUserRepository = portalUserRepository;
+    }
 
-    List<PortalUser> getByRole(Role role);
+    public PortalUser create(PortalUser portalUser) {
+        return portalUserRepository.save(portalUser);
+    }
 
-    void delete(Integer id);
+    public PortalUser update(Integer id, PortalUser portalUser) {
+        if (!portalUserRepository.existsById(id)) {
+            throw new EntityNotFoundException("Utente non trovato con id: " + id);
+        }
+        portalUser.setId(id);
+        return portalUserRepository.save(portalUser);
+    }
+
+    public PortalUser getById(Integer id) {
+        return portalUserRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Utente non trovato con id: " + id));
+    }
+
+    public List<PortalUser> getAll() {
+        return portalUserRepository.findAll();
+    }
+
+
+    public void delete(Integer id) {
+        if (!portalUserRepository.existsById(id)) {
+            throw new EntityNotFoundException("Utente non trovato con id: " + id);
+        }
+        portalUserRepository.deleteById(id);
+    }
 }

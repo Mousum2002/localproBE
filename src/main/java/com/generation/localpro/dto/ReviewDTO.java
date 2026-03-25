@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class ReviewDTO {
 
     private Integer id;
-
     @NotNull(message = "L'ID dell'utente recensito è obbligatorio")
     private Integer userId;
 

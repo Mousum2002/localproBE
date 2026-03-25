@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.generation.localpro.model.PortalUser;
-import com.generation.localpro.model.Role;
+
 
 
 public interface PortalUserRepository extends JpaRepository<PortalUser, Integer>
@@ -15,7 +15,6 @@ public interface PortalUserRepository extends JpaRepository<PortalUser, Integer>
     List<PortalUser> findByEmail(String email);
     List<PortalUser> findByCity(String city);
     List<PortalUser> findByAddress(String address);
-    List<PortalUser> findByRole(Role role);
   
 
 }

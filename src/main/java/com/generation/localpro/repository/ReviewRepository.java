@@ -7,6 +7,5 @@ import com.generation.localpro.model.Review;
  public interface ReviewRepository extends JpaRepository<Review, Integer>
 {
     List<Review> findByUserId(Integer userId);
-   
     List<Review> findByRating(String rating);
 }

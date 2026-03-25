@@ -1,38 +1,17 @@
 package com.generation.localpro.mapper;
 
-import org.springframework.stereotype.Component;
 
 import com.generation.localpro.dto.OperationTypeDTO;
 import com.generation.localpro.model.OperationType;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Component
-public class OperationTypeMapper {
+@Mapper(componentModel = "spring")
+public interface OperationTypeMapper {
 
-    public OperationTypeDTO toDto(OperationType entity) {
-        if (entity == null) {
-            return null;
-        }
-        return OperationTypeDTO.builder()
-            .id(entity.getId())
-            .userId(entity.getUserId())
-            .name(entity.getName())
-            .tags(entity.getTags())
-            .description(entity.getDescription())
-            .status(entity.getStatus())
-            .build();
-    }
+    OperationTypeDTO toDto(OperationType entity);
 
-    public OperationType toEntity(OperationTypeDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-        OperationType entity = new OperationType();
-        entity.setId(dto.getId());
-        entity.setUserId(dto.getUserId());
-        entity.setName(dto.getName());
-        entity.setTags(dto.getTags());
-        entity.setDescription(dto.getDescription());
-        entity.setStatus(dto.getStatus());
-        return entity;
-    }
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "operationsProvided", ignore = true)
+    OperationType toEntity(OperationTypeDTO dto);
 }

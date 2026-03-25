@@ -1,29 +1,22 @@
 package com.generation.localpro.mapper;
 
-import org.springframework.stereotype.Component;
 
 import com.generation.localpro.dto.OperationTypeByVendorDTO;
 import com.generation.localpro.model.OperationTypeByVendor;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Component
-public class OperationTypeByVendorMapper {
+@Mapper(componentModel = "spring")
+public interface OperationTypeByVendorMapper {
 
-    public OperationTypeByVendorDTO toDto(OperationTypeByVendor entity) {
-        if (entity == null) return null;
-        return OperationTypeByVendorDTO.builder()
-            .id(entity.getId())
-            .vendorId(entity.getUser() != null ? entity.getUser().getId() : null)
-            .operationTypeId(entity.getOperationType() != null ? entity.getOperationType().getId() : null)
-            .price(entity.getPrice())
-            .build();
-    }
+    // Flatten nested objects to IDs for the response
+    @Mapping(source = "user.id", target = "vendorId")
+    @Mapping(source = "operationType.id", target = "operationTypeId")
+    OperationTypeByVendorDTO toDto(OperationTypeByVendor entity);
 
-    public OperationTypeByVendor toEntity(OperationTypeByVendorDTO dto) {
-        if (dto == null) return null;
-        OperationTypeByVendor entity = new OperationTypeByVendor();
-        entity.setId(dto.getId());
-        entity.setPrice(dto.getPrice());
-        // user e operationType vengono impostati nel Service
-        return entity;
-    }
+    // user and operationType are resolved in the Service via repository lookups
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "operationType", ignore = true)
+    OperationTypeByVendor toEntity(OperationTypeByVendorDTO dto);
 }

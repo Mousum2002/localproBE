@@ -17,22 +17,20 @@ import java.util.List;
 @Builder
 public class OperationTypeDTO {
 
-    private int id;
+   private Integer id; // null on POST (auto-generated), populated in response
 
-    // Utile per sapere chi ha creato/gestisce questo tipo di operazione
     @NotNull(message = "L'ID utente è obbligatorio")
-    private int userId;
+    private Integer userId;
 
     @NotBlank(message = "Il nome dell'operazione non può essere vuoto")
     private String name;
 
-    // NotEmpty assicura che la lista non sia null e abbia almeno un elemento
     @NotEmpty(message = "Inserisci almeno un tag descrittivo")
     private List<String> tags;
 
     @NotBlank(message = "La descrizione è obbligatoria")
     private String description;
-    
+
     private Status status;
     
 }

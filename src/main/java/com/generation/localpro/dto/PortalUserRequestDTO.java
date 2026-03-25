@@ -3,19 +3,10 @@ package com.generation.localpro.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class PortalUserDTO {
-
-    @NotBlank(message = "Il nome è obbligatorio")
+public class PortalUserRequestDTO {
+      @NotBlank(message = "Il nome è obbligatorio")
     private String firstName;
 
     @NotBlank(message = "Il cognome è obbligatorio")

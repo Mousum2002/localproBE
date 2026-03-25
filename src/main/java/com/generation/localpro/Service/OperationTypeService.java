@@ -1,21 +1,52 @@
 package com.generation.localpro.Service;
 
-import java.util.List;
 
 import com.generation.localpro.model.OperationType;
 import com.generation.localpro.model.Status;
+import com.generation.localpro.repository.OperationTypeRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
-public interface OperationTypeService {
+@Service
+public class OperationTypeService {
 
-    OperationType create(OperationType operationType);
+    private final OperationTypeRepository operationTypeRepository;
 
-    OperationType update(Integer id, OperationType operationType);
+    public OperationTypeService(OperationTypeRepository operationTypeRepository) {
+        this.operationTypeRepository = operationTypeRepository;
+    }
 
-    OperationType getById(Integer id);
+    public OperationType create(OperationType operationType) {
+        return operationTypeRepository.save(operationType);
+    }
 
-    List<OperationType> getAll();
+    public OperationType update(Integer id, OperationType operationType) {
+        if (!operationTypeRepository.existsById(id)) {
+            throw new EntityNotFoundException("Operazione non trovata con id: " + id);
+        }
+        operationType.setId(id);
+        return operationTypeRepository.save(operationType);
+    }
 
-    List<OperationType> getByStatus(Status status);
+    public OperationType getById(Integer id) {
+        return operationTypeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Operazione non trovata con id: " + id));
+    }
 
-    void delete(Integer id);
+    public List<OperationType> getAll() {
+        return operationTypeRepository.findAll();
+    }
+
+    // Requires: List<OperationType> findByStatus(Status status); in the repository
+    public List<OperationType> getByStatus(Status status) {
+        return operationTypeRepository.findByStatus(status);
+    }
+
+    public void delete(Integer id) {
+        if (!operationTypeRepository.existsById(id)) {
+            throw new EntityNotFoundException("Operazione non trovata con id: " + id);
+        }
+        operationTypeRepository.deleteById(id);
+    }
 }

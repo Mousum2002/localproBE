@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OperationTypeByVendorDTO {
 
-    private int id;
+     private Integer id;
 
     @NotNull(message = "L'ID del fornitore è obbligatorio")
     private Integer vendorId;
