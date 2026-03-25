@@ -1,5 +1,6 @@
 package com.generation.localpro.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.generation.localpro.model.PortalUser;
@@ -7,18 +8,23 @@ import org.springframework.stereotype.Service;
 
 import com.generation.localpro.repository.PortalUserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Service
 public class PortalUserService {
 
+    private final PasswordEncoder passwordEncoder;
     private final PortalUserRepository portalUserRepository;
 
-    public PortalUserService(PortalUserRepository portalUserRepository) {
+    public PortalUserService(PortalUserRepository portalUserRepository, PasswordEncoder passwordEncoder) {
         this.portalUserRepository = portalUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public PortalUser create(PortalUser portalUser) {
+        portalUser.setPassword(passwordEncoder.encode(portalUser.getPassword()));
+        portalUser.setRoles(Arrays.asList("USER"));
         return portalUserRepository.save(portalUser);
     }
 

@@ -9,9 +9,12 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +33,13 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)  // Explicitly use DB provider
                 .build();
     }
-
+@Bean
+DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService,
+                                                    PasswordEncoder passwordEncoder) {
+    DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+    provider.setPasswordEncoder(passwordEncoder);
+    return provider;
+}
      @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

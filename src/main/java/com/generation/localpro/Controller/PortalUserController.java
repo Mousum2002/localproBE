@@ -23,7 +23,6 @@ public class PortalUserController {
         this.portalUserMapper = portalUserMapper;
     }
 
-   
 
     @PutMapping("/{id}")
     public PortalUserResponseDTO update(@PathVariable Integer id,

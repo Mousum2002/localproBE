@@ -4,14 +4,15 @@ package com.generation.localpro.Controller;
 import com.generation.localpro.dto.OperationTypeDTO;
 import com.generation.localpro.mapper.OperationTypeMapper;
 import com.generation.localpro.model.OperationType;
-import com.generation.localpro.model.Status;
 import com.generation.localpro.Service.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import org.springframework.http.ResponseEntity;
+
 
 @RestController
 @RequestMapping("/api/operation-types")
@@ -45,15 +46,7 @@ public class OperationTypeController {
         return operationTypeMapper.toDto(operationTypeService.getById(id));
     }
 
-    @GetMapping
-    public List<OperationTypeDTO> getAll(@RequestParam(required = false) Status status) {
-        List<OperationType> types = (status != null)
-                ? operationTypeService.getByStatus(status)
-                : operationTypeService.getAll();
-        return types.stream()
-                .map(operationTypeMapper::toDto)
-                .collect(Collectors.toList());
-    }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -62,8 +55,8 @@ public class OperationTypeController {
     }
 
 
-    @GetMapping
-    public  ResponseEntity<List<OperationTypeDTO>> searchByTag (@RequestParam(required = false) String tags){
+    @GetMapping("/tag/{tags}")
+    public  ResponseEntity<List<OperationTypeDTO>> searchByTag (@PathVariable String tags){
        List<OperationTypeDTO> results = operationTypeService.searchByTag(tags);
         return ResponseEntity.ok(results);
     }

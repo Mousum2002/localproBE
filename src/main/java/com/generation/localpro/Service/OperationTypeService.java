@@ -4,7 +4,7 @@ package com.generation.localpro.Service;
 import com.generation.localpro.dto.OperationTypeDTO;
 import com.generation.localpro.mapper.OperationTypeMapper;
 import com.generation.localpro.model.OperationType;
-import com.generation.localpro.model.Status;
+
 import com.generation.localpro.repository.OperationTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -43,11 +43,7 @@ public class OperationTypeService {
         return operationTypeRepository.findAll();
     }
 
-    // Requires: List<OperationType> findByStatus(Status status); in the repository
-    public List<OperationType> getByStatus(Status status) {
-        return operationTypeRepository.findByStatus(status);
-    }
-
+  
     public void delete(Integer id) {
         if (!operationTypeRepository.existsById(id)) {
             throw new EntityNotFoundException("Operazione non trovata con id: " + id);

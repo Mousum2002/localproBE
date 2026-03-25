@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.generation.localpro.Service.OperationTypeByVendorService;
 import com.generation.localpro.dto.OperationTypeByVendorDTO;
 import com.generation.localpro.mapper.OperationTypeByVendorMapper;
@@ -55,10 +54,7 @@ public class OperationTypeByVendorController {
         return operationTypeByVendorMapper.toDto(updated);
     }
 
-    @GetMapping("/{id}")
-    public OperationTypeByVendorDTO getById(@PathVariable Integer id) {
-        return operationTypeByVendorMapper.toDto(operationTypeByVendorService.getById(id));
-    }
+
 
     @GetMapping
     public List<OperationTypeByVendorDTO> getAll(

@@ -15,10 +15,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PortalUserRequestDTO {
       @NotBlank(message = "Il nome è obbligatorio")
-    private String firstName;
+    private String userName;
 
-    @NotBlank(message = "Il cognome è obbligatorio")
-    private String lastName;
+
 
     @Email(message = "Inserire un indirizzo email valido")
     @NotBlank(message = "L'email è obbligatoria")
@@ -32,7 +31,6 @@ public class PortalUserRequestDTO {
      private Integer  x;
      @NotNull(message = "La y è obbligatoria")
     private Integer   y;
-
 
     private String city;
     private String address;

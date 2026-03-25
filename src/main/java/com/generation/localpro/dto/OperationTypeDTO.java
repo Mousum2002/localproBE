@@ -1,6 +1,6 @@
 package com.generation.localpro.dto;
 
-import com.generation.localpro.model.Status;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +31,5 @@ public class OperationTypeDTO {
     @NotBlank(message = "La descrizione è obbligatoria")
     private String description;
 
-    private Status status;
     
 }
