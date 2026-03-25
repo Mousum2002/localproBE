@@ -1,8 +1,12 @@
 package com.generation.localpro.Controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.generation.localpro.Service.PortalUserService;
@@ -33,4 +37,12 @@ public class PublicController {
         return ResponseEntity.status(HttpStatus.CREATED).body(portalUserMapper.toResponseDto(created));
     }
     
+    @GetMapping
+    public ResponseEntity<List<PortalUserResponseDTO>> getAll() {
+      List<PortalUser> users = portalUserService.getAll();
+      List<PortalUserResponseDTO> response = users.stream()
+            .map(portalUserMapper::toResponseDto)
+            .collect(Collectors.toList());
+    return ResponseEntity.ok(response);
+    }
 }
