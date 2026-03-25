@@ -15,15 +15,15 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ReviewDTO {
 
-    private Integer id;
-    @NotNull(message = "L'ID dell'utente recensito è obbligatorio")
-    private Integer userId;
+        private Integer id;
+        @NotNull(message = "L'ID dell'utente recensito è obbligatorio")
+        private Integer userId;
 
-    @Min(value = 1, message = "Il rating minimo è 1")
-    @Max(value = 5, message = "Il rating massimo è 5")
-    private int rating;
+        @Min(value = 1, message = "Il rating minimo è 1")
+        @Max(value = 5, message = "Il rating massimo è 5")
+        private int rating;
 
-    @NotBlank(message = "La descrizione della recensione non può essere vuota")
-    private String description;
+        @NotBlank(message = "La descrizione della recensione non può essere vuota")
+        private String description;
     
 }
