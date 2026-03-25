@@ -1,6 +1,8 @@
 package com.generation.localpro.Service;
 
 
+import com.generation.localpro.dto.OperationTypeDTO;
+import com.generation.localpro.mapper.OperationTypeMapper;
 import com.generation.localpro.model.OperationType;
 import com.generation.localpro.model.Status;
 import com.generation.localpro.repository.OperationTypeRepository;
@@ -12,9 +14,12 @@ import java.util.List;
 public class OperationTypeService {
 
     private final OperationTypeRepository operationTypeRepository;
+    private final OperationTypeMapper mapper;
 
-    public OperationTypeService(OperationTypeRepository operationTypeRepository) {
+
+    public OperationTypeService(OperationTypeRepository operationTypeRepository, OperationTypeMapper mapper) {
         this.operationTypeRepository = operationTypeRepository;
+        this.mapper = mapper;
     }
 
     public OperationType create(OperationType operationType) {
@@ -48,5 +53,11 @@ public class OperationTypeService {
             throw new EntityNotFoundException("Operazione non trovata con id: " + id);
         }
         operationTypeRepository.deleteById(id);
+    }
+
+    public List<OperationTypeDTO> searchByTag (String searchTerme ) {
+          
+      List<OperationType> results = operationTypeRepository.findByOperationType(searchTerme);
+      return mapper.toDtos(results);
     }
 }

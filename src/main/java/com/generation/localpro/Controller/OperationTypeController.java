@@ -8,6 +8,7 @@ import com.generation.localpro.model.Status;
 import com.generation.localpro.Service.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,5 +59,12 @@ public class OperationTypeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         operationTypeService.delete(id);
+    }
+
+
+    @GetMapping
+    public  ResponseEntity<List<OperationTypeDTO>> searchByTag (@RequestParam(required = false) String tags){
+       List<OperationTypeDTO> results = operationTypeService.searchByTag(tags);
+        return ResponseEntity.ok(results);
     }
 }

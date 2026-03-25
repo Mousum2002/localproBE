@@ -3,6 +3,8 @@ package com.generation.localpro.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.generation.localpro.model.OperationType;
 import com.generation.localpro.model.OperationTypeByVendor;
@@ -12,4 +14,11 @@ public interface OperationTypeRepository extends JpaRepository<OperationType, In
 {
     List<OperationTypeByVendor> findByUserId(Integer userId);
     List<OperationType> findByStatus(Status status);
+
+    @Query("SELECT DISTINCT o FROM OperationType o JOIN o.tags t WHERE LOWER(t) LIKE LOWER(CONCAT('%', :tag, '%')) OR LOWER(o.name) LIKE LOWER(CONCAT('%', :tag, '%'))")
+    List<OperationType> findByOperationType(@Param("tag") String tag);
+
+     
+    
+
 }
