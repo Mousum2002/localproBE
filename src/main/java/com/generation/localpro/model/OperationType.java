@@ -5,8 +5,6 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,9 +30,6 @@ public class OperationType {
     private List<String> tags;
 
     private String description;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
     @OneToMany(mappedBy = "operationType", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OperationTypeByVendor> operationsProvided;

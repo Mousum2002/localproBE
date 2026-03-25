@@ -25,7 +25,7 @@ public class ReviewController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ReviewDTO create(@Valid @RequestBody ReviewDTO dto) {
-        Review created = reviewService.create(reviewMapper.toEntity(dto));
+        Review created = reviewService.create(dto);
         return reviewMapper.toDto(created);
     }
 
