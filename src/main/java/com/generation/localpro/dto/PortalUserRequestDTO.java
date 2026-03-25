@@ -5,6 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PortalUserRequestDTO {
       @NotBlank(message = "Il nome è obbligatorio")
     private String firstName;
@@ -24,6 +31,6 @@ public class PortalUserRequestDTO {
     private String address;
     private List<String> roles;
     private String bio;
-    private int x;
-    private int y;
+    private Integer  x;
+    private Integer   y;
 }
