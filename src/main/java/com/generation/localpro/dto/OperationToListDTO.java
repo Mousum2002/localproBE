@@ -1,5 +1,6 @@
 package com.generation.localpro.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,7 @@ public class OperationToListDTO {
     
     private Integer id;
 
-    @NotNull(message = "Lo username non puo essere vuoto")
+    @NotBlank(message = "Lo username non puo essere vuoto")
     private String userName;
 
     @NotNull(message = "La coordinata x non puo essere vuota")
@@ -24,10 +25,10 @@ public class OperationToListDTO {
     private Integer y;
 
     @NotNull(message = "La media dei rating non puo essere vuota")
-    private int ratingAvg;
+    private Integer ratingAvg;
 
     @NotNull(message = "Il prezzo non puo essere vuoto")
-    private int price;
+    private Integer price;
 
     @NotNull(message = "La descrizione non puo essere vuota")
     private String description;

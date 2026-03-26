@@ -52,4 +52,8 @@ public class PortalUserService {
         }
         portalUserRepository.deleteById(id);
     }
+    public PortalUser findByUserName(String userName) {
+		return portalUserRepository.findByUserName(userName)
+				.orElseThrow(() -> new IllegalArgumentException("User not found: " + userName));
+	}
 }
