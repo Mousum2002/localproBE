@@ -1,4 +1,4 @@
-package com.generation.localpro.Controller;
+package com.generation.localpro.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.generation.localpro.Service.PortalUserService;
+import com.generation.localpro.service.PortalUserService;
 import com.generation.localpro.dto.PortalUserRequestDTO;
 import com.generation.localpro.dto.PortalUserResponseDTO;
 import com.generation.localpro.model.PortalUser;

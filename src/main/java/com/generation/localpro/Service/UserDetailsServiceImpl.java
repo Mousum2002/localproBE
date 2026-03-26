@@ -1,4 +1,4 @@
-package com.generation.localpro.Service;
+package com.generation.localpro.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

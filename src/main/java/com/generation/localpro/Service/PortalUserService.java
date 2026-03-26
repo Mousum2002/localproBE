@@ -1,4 +1,4 @@
-package com.generation.localpro.Service;
+package com.generation.localpro.service;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.generation.localpro.Service;
+package com.generation.localpro.service;
 
 import com.generation.localpro.dto.ReviewDTO;
 import com.generation.localpro.model.PortalUser;
