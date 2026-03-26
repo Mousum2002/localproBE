@@ -41,4 +41,9 @@ public class PortalUserController {
     public void delete(@PathVariable Integer id) {
         portalUserService.delete(id);
     }
+
+    @DeleteMapping("/{id}/ban")
+    public void banUser(@PathVariable Integer id) {
+        portalUserService.banUser(id);
+    }
 }
