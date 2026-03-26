@@ -33,30 +33,30 @@ public class PortalUserService {
     }
 
    public PortalUser update(Integer id, PortalUser updated) {
-    PortalUser existing = portalUserRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
+        PortalUser existing = portalUserRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
 
-    existing.setUserName(updated.getUserName());
-    existing.setEmail(updated.getEmail());
-    existing.setCity(updated.getCity());
-    existing.setAddress(updated.getAddress());
-    existing.setBio(updated.getBio());
-    existing.setFirstName(updated.getFirstName());
-    existing.setLastName(updated.getLastName());
-    existing.setProfileImage(updated.getProfileImage());
-    existing.setX(updated.getX());
-    existing.setY(updated.getY());
-    existing.setRoles(updated.getRoles());
+        existing.setUserName(updated.getUserName());
+        existing.setEmail(updated.getEmail());
+        existing.setCity(updated.getCity());
+        existing.setAddress(updated.getAddress());
+        existing.setBio(updated.getBio());
+        existing.setFirstName(updated.getFirstName());
+        existing.setLastName(updated.getLastName());
+        existing.setProfileImage(updated.getProfileImage());
+        existing.setX(updated.getX());
+        existing.setY(updated.getY());
+        existing.setRoles(updated.getRoles());
 
-    // ← Aggiorna la password SOLO se non è il placeholder
-    if (updated.getPassword() != null
-            && !updated.getPassword().equals("UNCHANGED")
-            && !updated.getPassword().isBlank()) {
-        existing.setPassword(passwordEncoder.encode(updated.getPassword()));
+        // ← Aggiorna la password SOLO se non è il placeholder
+        if (updated.getPassword() != null
+                && !updated.getPassword().equals("UNCHANGED")
+                && !updated.getPassword().isBlank()) {
+            existing.setPassword(passwordEncoder.encode(updated.getPassword()));
+        }
+
+        return portalUserRepository.save(existing);
     }
-
-    return portalUserRepository.save(existing);
-}
 
     public PortalUser getById(Integer id) {
         return portalUserRepository.findById(id)
