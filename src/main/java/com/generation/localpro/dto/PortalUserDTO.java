@@ -26,6 +26,7 @@ public class PortalUserDTO {
     @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
     private String password;
 
+
     private String city;
     private String address;
     private List<String> roles;
