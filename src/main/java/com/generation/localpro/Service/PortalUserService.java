@@ -56,4 +56,16 @@ public class PortalUserService {
 		return portalUserRepository.findByUserName(userName)
 				.orElseThrow(() -> new IllegalArgumentException("User not found: " + userName));
 	}
+
+    public void banUser(Integer id) {
+        PortalUser user = portalUserRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        if (user.isBanned()) {
+            throw new EntityNotFoundException("User is already banned");
+        }
+        user.setBanned(true);
+        portalUserRepository.save(user);
+    }
+
+
 }

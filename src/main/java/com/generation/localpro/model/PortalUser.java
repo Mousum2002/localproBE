@@ -33,6 +33,7 @@ public class PortalUser {
     private String password;
     private String city;
     private String address;
+    private boolean isBanned;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
@@ -48,4 +49,6 @@ public class PortalUser {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OperationTypeByVendor> operationsProvided;
+
+    
 }
