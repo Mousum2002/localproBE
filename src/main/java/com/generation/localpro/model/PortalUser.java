@@ -40,15 +40,20 @@ public class PortalUser {
     @Column(name = "role")
     private List<String> roles;
 
+    private String firstName;
+    private String lastName;
+    private String profileImage;
     private String bio;
     private int x;
     private int y;
+    
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OperationTypeByVendor> operationsProvided;
+
 
     
 }

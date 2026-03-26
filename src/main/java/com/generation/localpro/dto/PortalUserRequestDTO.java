@@ -30,6 +30,9 @@ public class PortalUserRequestDTO {
      @NotNull(message = "La y è obbligatoria")
     private Integer   y;
 
+    private String firstName;
+    private String lastName;
+    private String profileImage;
     private String city;
     private String address;
     private List<String> roles;
