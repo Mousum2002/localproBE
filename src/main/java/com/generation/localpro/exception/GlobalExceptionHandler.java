@@ -10,6 +10,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.DataIntegrityViolationException;
+
+
 
 
 @RestControllerAdvice
@@ -54,6 +57,8 @@ public class GlobalExceptionHandler {
             .status(HttpStatus.CONFLICT)           
             .body(Map.of("error", message));
     }
+
+  
 
     @ExceptionHandler(Exception.class)  
     public ResponseEntity<String> handleGeneral(Exception ex) {

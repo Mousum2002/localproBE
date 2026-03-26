@@ -2,6 +2,8 @@ package com.generation.localpro.model;
 
 import java.util.List;
 
+import org.springframework.stereotype.Indexed;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -16,6 +18,8 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Data
@@ -27,6 +31,9 @@ public class PortalUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(unique = true, nullable = false)
+     @NotBlank(message = "Username is required")           // ← NEW
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
     private String userName;
 
     private String email;

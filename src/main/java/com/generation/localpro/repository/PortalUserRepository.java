@@ -19,5 +19,7 @@ public interface PortalUserRepository extends JpaRepository<PortalUser, Integer>
 
     Optional<PortalUser> findByUserName(String userName);
 
+     boolean existsByUserName(String userName);
+
 
 }

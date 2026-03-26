@@ -35,7 +35,6 @@ public class PortalUserRequestDTO {
     private String profileImage;
     private String city;
     private String address;
-    private List<String> roles;
     private String bio;
    
 }

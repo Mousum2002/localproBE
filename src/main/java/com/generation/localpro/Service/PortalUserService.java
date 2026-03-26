@@ -24,6 +24,9 @@ public class PortalUserService {
     }
 
     public PortalUser create(PortalUser portalUser) {
+        if (portalUserRepository.existsByUserName(portalUser.getUserName())) {
+            throw new IllegalArgumentException("Username already taken");
+        }
         portalUser.setPassword(passwordEncoder.encode(portalUser.getPassword()));
         portalUser.setRoles(Arrays.asList("USER"));
         return portalUserRepository.save(portalUser);

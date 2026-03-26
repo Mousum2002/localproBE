@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/**", "/api/reviews/**", "/api/vendor-operations/**").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
-                // ← CHANGED: replaced .httpBasic() with formLogin
+
                 .formLogin(form -> form
                         .loginProcessingUrl("/api/auth/login")   
                         .usernameParameter("username")
@@ -59,6 +59,15 @@ public class SecurityConfig {
                         })
                         .permitAll()
                 )
+                 .exceptionHandling(ex -> ex
+                    .authenticationEntryPoint((request, response, authException) -> {
+                        response.setContentType("application/json");
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        response.getWriter().write(
+                            "{\"error\":\"Unauthorized - Please login first\"}"
+                        );
+                    })
+            )
                 .logout(logout -> logout                      
                         .logoutUrl("/api/auth/logout")
                         .logoutSuccessHandler((req, res, auth) -> {
@@ -83,7 +92,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of("http://localhost:4200"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // ← CRITICAL for cookies to work cross-origin
+        config.setAllowCredentials(true); 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
