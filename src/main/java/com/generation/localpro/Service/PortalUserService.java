@@ -3,6 +3,7 @@ package com.generation.localpro.Service;
 import java.util.Arrays;
 import java.util.List;
 
+import com.generation.localpro.exception.ResourceNotFoundException;
 import com.generation.localpro.model.PortalUser;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +29,31 @@ public class PortalUserService {
         return portalUserRepository.save(portalUser);
     }
 
-    public PortalUser update(Integer id, PortalUser portalUser) {
-        if (!portalUserRepository.existsById(id)) {
-            throw new EntityNotFoundException("Utente non trovato con id: " + id);
-        }
-        portalUser.setId(id);
-        return portalUserRepository.save(portalUser);
+   public PortalUser update(Integer id, PortalUser updated) {
+    PortalUser existing = portalUserRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
+
+    existing.setUserName(updated.getUserName());
+    existing.setEmail(updated.getEmail());
+    existing.setCity(updated.getCity());
+    existing.setAddress(updated.getAddress());
+    existing.setBio(updated.getBio());
+    existing.setFirstName(updated.getFirstName());
+    existing.setLastName(updated.getLastName());
+    existing.setProfileImage(updated.getProfileImage());
+    existing.setX(updated.getX());
+    existing.setY(updated.getY());
+    existing.setRoles(updated.getRoles());
+
+    // ← Aggiorna la password SOLO se non è il placeholder
+    if (updated.getPassword() != null
+            && !updated.getPassword().equals("UNCHANGED")
+            && !updated.getPassword().isBlank()) {
+        existing.setPassword(passwordEncoder.encode(updated.getPassword()));
     }
+
+    return portalUserRepository.save(existing);
+}
 
     public PortalUser getById(Integer id) {
         return portalUserRepository.findById(id)
