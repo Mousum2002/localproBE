@@ -5,18 +5,27 @@ import com.generation.localpro.dto.OperationTypeByVendorDTO;
 import com.generation.localpro.model.OperationTypeByVendor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import com.generation.localpro.model.OperationType;
+import org.mapstruct.Named;
+
 
 @Mapper(componentModel = "spring")
 public interface OperationTypeByVendorMapper {
 
-    // Flatten nested objects to IDs for the response
-    @Mapping(source = "user.id", target = "vendorId")
+
     @Mapping(source = "operationType.id", target = "operationTypeId")
     OperationTypeByVendorDTO toDto(OperationTypeByVendor entity);
 
-    // user and operationType are resolved in the Service via repository lookups
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", ignore = true)
-    @Mapping(target = "operationType", ignore = true)
+    @Mapping(target = "operationType", source = "operationTypeId", qualifiedByName = "toOperationTypeShell")
     OperationTypeByVendor toEntity(OperationTypeByVendorDTO dto);
+
+    @Named("toOperationTypeShell")
+    default OperationType toOperationTypeShell(Integer id) {
+        if (id == null) return null;
+        OperationType ot = new OperationType();
+        ot.setId(id);
+        return ot;
+    }
 }
