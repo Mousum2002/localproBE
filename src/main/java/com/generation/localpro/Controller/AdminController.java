@@ -1,8 +1,8 @@
-package com.generation.localpro.controller;
+package com.generation.localpro.Controller;
 
+import com.generation.localpro.Service.PortalUserService;
 import com.generation.localpro.model.PortalUser;
 
-import com.generation.localpro.service.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

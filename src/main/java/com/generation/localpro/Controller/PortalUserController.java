@@ -1,10 +1,10 @@
-package com.generation.localpro.controller;
+package com.generation.localpro.Controller;
 
+import com.generation.localpro.Service.PortalUserService;
 import com.generation.localpro.dto.PortalUserRequestDTO;
 import com.generation.localpro.dto.PortalUserResponseDTO;
 import com.generation.localpro.mapper.PortalUserMapper;
 import com.generation.localpro.model.PortalUser;
-import com.generation.localpro.service.PortalUserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

@@ -18,7 +18,6 @@ public class PortalUserDTO {
     @NotBlank(message = "Il nome è obbligatorio")
     private String userName;
 
-
     @Email(message = "Inserire un indirizzo email valido")
     @NotBlank(message = "L'email è obbligatoria")
     private String email;

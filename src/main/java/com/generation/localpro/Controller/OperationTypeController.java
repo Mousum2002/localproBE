@@ -1,10 +1,10 @@
-package com.generation.localpro.controller;
+package com.generation.localpro.Controller;
 
 
+import com.generation.localpro.Service.OperationTypeService;
 import com.generation.localpro.dto.OperationTypeDTO;
 import com.generation.localpro.mapper.OperationTypeMapper;
 import com.generation.localpro.model.OperationType;
-import com.generation.localpro.service.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 

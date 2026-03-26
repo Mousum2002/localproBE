@@ -1,9 +1,9 @@
-package com.generation.localpro.controller;
+package com.generation.localpro.Controller;
 
+import com.generation.localpro.Service.ReviewService;
 import com.generation.localpro.dto.ReviewDTO;
 import com.generation.localpro.mapper.ReviewMapper;
 import com.generation.localpro.model.Review;
-import com.generation.localpro.service.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

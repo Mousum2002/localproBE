@@ -1,4 +1,4 @@
-package com.generation.localpro.controller;
+package com.generation.localpro.Controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.generation.localpro.Service.OperationTypeByVendorService;
 import com.generation.localpro.dto.OperationTypeByVendorDTO;
 import com.generation.localpro.mapper.OperationTypeByVendorMapper;
 import com.generation.localpro.model.OperationTypeByVendor;
-import com.generation.localpro.service.OperationTypeByVendorService;
-
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:4200")
