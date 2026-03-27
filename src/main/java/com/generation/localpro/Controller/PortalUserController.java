@@ -23,6 +23,8 @@ public class PortalUserController {
     }
 
 
+    
+
     @PutMapping("/{id}")
     public PortalUserResponseDTO update(@PathVariable Integer id,
                                         @Valid @RequestBody PortalUserRequestDTO requestDto) {

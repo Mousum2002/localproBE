@@ -31,7 +31,7 @@ public class OperationTypeByVendorService {
     }  
     entity.setUser(currentVendor);
     return repository.save(entity);
-}
+    }
 
 
     public OperationTypeByVendor update(Integer id, OperationTypeByVendor entity) {
