@@ -21,7 +21,6 @@ public class PortalUserRequestDTO {
     @NotBlank(message = "L'email è obbligatoria")
     private String email;
 
-    @NotBlank(message = "La password è obbligatoria")
     @Size(min = 8, message = "La password deve avere almeno 8 caratteri")
     private String password;
 

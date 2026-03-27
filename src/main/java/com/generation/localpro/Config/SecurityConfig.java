@@ -1,5 +1,7 @@
 package com.generation.localpro.Config;
 
+
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,7 +25,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
-
 
 @Configuration
 @EnableWebSecurity
