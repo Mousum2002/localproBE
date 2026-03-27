@@ -21,4 +21,5 @@ public class PortalUserResponseDTO {
     private String bio;
     private int x;
     private int y;
+    private boolean isBanned;
 }
