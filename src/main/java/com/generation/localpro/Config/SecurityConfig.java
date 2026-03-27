@@ -19,26 +19,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
 
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    String contentType = "application/json";
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http,
-            DaoAuthenticationProvider authenticationProvider) throws Exception {
+            DaoAuthenticationProvider authenticationProvider) {
         return http
                 
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/public/**", "/api/auth/login", "/api/operation-types/**").permitAll()  
-                        .requestMatchers("/api/users/**", "/api/reviews/**", "/api/vendor-operations/**").authenticated()
+                        .requestMatchers("/public/**", "/api/auth/login").permitAll() 
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
 
@@ -47,7 +44,7 @@ public class SecurityConfig {
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .successHandler((req, res, auth) -> {
-                            res.setContentType("application/json");
+                            res.setContentType(contentType);
                             res.setStatus(HttpServletResponse.SC_OK);
                             res.getWriter().write(
                                 "{\"message\":\"Login successful\",\"user\":\"" 
@@ -55,7 +52,7 @@ public class SecurityConfig {
                             );
                         })
                         .failureHandler((req, res, ex) -> {
-                            res.setContentType("application/json");
+                            res.setContentType(contentType);
                             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             res.getWriter().write("{\"message\":\"Invalid credentials\"}");
                         })
@@ -63,7 +60,7 @@ public class SecurityConfig {
                 )
                  .exceptionHandling(ex -> ex
                     .authenticationEntryPoint((request, response, authException) -> {
-                        response.setContentType("application/json");
+                        response.setContentType(contentType);
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                         response.getWriter().write(
                             "{\"error\":\"Unauthorized - Please login first\"}"
@@ -89,8 +86,7 @@ public class SecurityConfig {
 
 
     @Bean
-    DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService,
-                                                        PasswordEncoder passwordEncoder) {
+    DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService,PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
@@ -102,7 +98,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
     return config.getAuthenticationManager();
 }
 }
