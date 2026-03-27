@@ -51,8 +51,8 @@ public class PortalUser {
     private String lastName;
     private String profileImage;
     private String bio;
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
