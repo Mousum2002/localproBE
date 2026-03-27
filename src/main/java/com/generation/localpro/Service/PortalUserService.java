@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.generation.localpro.repository.PortalUserRepository;
 import jakarta.persistence.EntityNotFoundException;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -33,7 +35,9 @@ public class PortalUserService {
     }
 
    public PortalUser update(Integer id, PortalUser updated) {
-        PortalUser existing = portalUserRepository.findById(id)
+
+    String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        PortalUser existing = portalUserRepository.findByUserName(currentUsername)
             .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
 
         existing.setUserName(updated.getUserName());
@@ -48,7 +52,6 @@ public class PortalUserService {
         existing.setY(updated.getY());
         existing.setRoles(updated.getRoles());
 
-        // ← Aggiorna la password SOLO se non è il placeholder
         if (updated.getPassword() != null
                 && !updated.getPassword().equals("UNCHANGED")
                 && !updated.getPassword().isBlank()) {
