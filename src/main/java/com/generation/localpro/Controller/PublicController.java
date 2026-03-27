@@ -5,6 +5,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,32 +21,47 @@ import com.generation.localpro.dto.PortalUserRequestDTO;
 import com.generation.localpro.dto.PortalUserResponseDTO;
 import com.generation.localpro.model.PortalUser;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-
+import lombok.RequiredArgsConstructor;
 import com.generation.localpro.mapper.PortalUserMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 
-
+ @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/public")
 public class PublicController {
 
-      private final PortalUserService portalUserService;
-      private final PortalUserMapper portalUserMapper;
-      private final OperationTolistService operationService;
+       private final PortalUserService portalUserService;
+    private final PortalUserMapper portalUserMapper;
+    private final OperationTolistService operationService;
+    private final AuthenticationManager authenticationManager; 
 
-      public PublicController(PortalUserService portalUserService, PortalUserMapper portalUserMapper, OperationTolistService operationService){
-        this.portalUserService = portalUserService;
-        this.portalUserMapper = portalUserMapper;
-        this.operationService = operationService;
-      }
+   
      @PostMapping("/register")
-    public ResponseEntity<PortalUserResponseDTO> registerUser(@Valid @RequestBody PortalUserRequestDTO requestDto) {
+    public ResponseEntity<PortalUserResponseDTO> registerUser(@Valid @RequestBody PortalUserRequestDTO requestDto,HttpServletRequest request) {
         PortalUser created = portalUserService.create(portalUserMapper.toEntity(requestDto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(portalUserMapper.toResponseDto(created));
+
+           UsernamePasswordAuthenticationToken token =
+            new UsernamePasswordAuthenticationToken(requestDto.getUserName(), requestDto.getPassword());
+            token.setDetails(new WebAuthenticationDetails(request));
+            Authentication authentication = authenticationManager.authenticate(token);
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+
+         request.getSession(true).setAttribute(
+            HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context
+        );
+
+
+       return ResponseEntity.status(HttpStatus.CREATED).body(portalUserMapper.toResponseDto(created));
     }
     
     @GetMapping
