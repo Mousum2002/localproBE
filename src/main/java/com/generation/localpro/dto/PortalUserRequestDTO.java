@@ -25,9 +25,9 @@ public class PortalUserRequestDTO {
     private String password;
 
     @NotNull(message = "La x è obbligatoria")
-     private Integer  x;
+     private Double  x;
      @NotNull(message = "La y è obbligatoria")
-    private Integer   y;
+    private Double   y;
 
     private String firstName;
     private String lastName;

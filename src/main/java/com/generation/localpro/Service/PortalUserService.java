@@ -11,7 +11,6 @@ import com.generation.localpro.repository.PortalUserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @Service
 public class PortalUserService {
 
@@ -32,7 +31,7 @@ public class PortalUserService {
         return portalUserRepository.save(portalUser);
     }
 
-   public PortalUser update(Integer id, PortalUser updated) {
+    public PortalUser update(Integer id, PortalUser updated) {
         PortalUser existing = portalUserRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
 
@@ -46,9 +45,8 @@ public class PortalUserService {
         existing.setProfileImage(updated.getProfileImage());
         existing.setX(updated.getX());
         existing.setY(updated.getY());
-        existing.setRoles(updated.getRoles());
+        // ruoli NON aggiornati — si cambiano solo da admin
 
-        // ← Aggiorna la password SOLO se non è il placeholder
         if (updated.getPassword() != null
                 && !updated.getPassword().equals("UNCHANGED")
                 && !updated.getPassword().isBlank()) {
@@ -67,34 +65,35 @@ public class PortalUserService {
         return portalUserRepository.findAll();
     }
 
-
     public void delete(Integer id) {
         if (!portalUserRepository.existsById(id)) {
             throw new EntityNotFoundException("Utente non trovato con id: " + id);
         }
         portalUserRepository.deleteById(id);
     }
+
     public PortalUser findByUserName(String userName) {
-		return portalUserRepository.findByUserName(userName)
-				.orElseThrow(() -> new IllegalArgumentException("User not found: " + userName));
-	}
+        return portalUserRepository.findByUserName(userName)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userName));
+    }
 
     public void banUser(Integer id) {
         PortalUser user = portalUserRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         if (user.isBanned()) {
-            throw new EntityNotFoundException("User is already banned");
+            throw new IllegalStateException("User is already banned");
         }
         user.setBanned(true);
         portalUserRepository.save(user);
     }
 
     public void unbanUser(Integer id) {
-    PortalUser user = portalUserRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("User not found"));
-    user.setBanned(false);
-    portalUserRepository.save(user);
+        PortalUser user = portalUserRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        if (!user.isBanned()) {
+            throw new IllegalStateException("User is not banned");
+        }
+        user.setBanned(false);
+        portalUserRepository.save(user);
     }
-
-
 }

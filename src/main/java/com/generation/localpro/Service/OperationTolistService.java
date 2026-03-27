@@ -17,9 +17,9 @@ public class OperationTolistService {
 private final OperationTypeByVendorRepository vendorRepo;
     private final OperationToListMapper mapper;
 
-    @Transactional(readOnly = true)
-    public List<OperationToListDTO> getAllVendorOperations() {
-        return mapper.toDtos(vendorRepo.findAll());
-    }
+ @Transactional(readOnly = true)
+public List<OperationToListDTO> getAll() {
+    return mapper.toDtos(vendorRepo.findAllWithDetails()); 
+}
     
 }

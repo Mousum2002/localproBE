@@ -1,17 +1,14 @@
 package com.generation.localpro.Controller;
 
-
 import com.generation.localpro.Service.OperationTypeService;
 import com.generation.localpro.dto.OperationTypeDTO;
 import com.generation.localpro.mapper.OperationTypeMapper;
 import com.generation.localpro.model.OperationType;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
-import org.springframework.http.ResponseEntity;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -25,6 +22,19 @@ public class OperationTypeController {
                                    OperationTypeMapper operationTypeMapper) {
         this.operationTypeService = operationTypeService;
         this.operationTypeMapper = operationTypeMapper;
+    }
+
+    @GetMapping
+    public List<OperationTypeDTO> getAll() {
+        return operationTypeService.getAll()
+                .stream()
+                .map(operationTypeMapper::toDto)
+                .toList();
+    }
+
+    @GetMapping("/{id}")
+    public OperationTypeDTO getById(@PathVariable Integer id) {
+        return operationTypeMapper.toDto(operationTypeService.getById(id));
     }
 
     @PostMapping
@@ -41,23 +51,14 @@ public class OperationTypeController {
         return operationTypeMapper.toDto(updated);
     }
 
-    @GetMapping("/{id}")
-    public OperationTypeDTO getById(@PathVariable Integer id) {
-        return operationTypeMapper.toDto(operationTypeService.getById(id));
-    }
-
-
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         operationTypeService.delete(id);
     }
 
-
     @GetMapping("/tag/{tags}")
-    public  ResponseEntity<List<OperationTypeDTO>> searchByTag (@PathVariable String tags){
-       List<OperationTypeDTO> results = operationTypeService.searchByTag(tags);
-        return ResponseEntity.ok(results);
+    public ResponseEntity<List<OperationTypeDTO>> searchByTag(@PathVariable String tags) {
+        return ResponseEntity.ok(operationTypeService.searchByTag(tags));
     }
 }
