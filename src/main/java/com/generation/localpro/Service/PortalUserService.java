@@ -89,5 +89,12 @@ public class PortalUserService {
         portalUserRepository.save(user);
     }
 
+    public void unbanUser(Integer id) {
+    PortalUser user = portalUserRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("User not found"));
+    user.setBanned(false);
+    portalUserRepository.save(user);
+    }
+
 
 }

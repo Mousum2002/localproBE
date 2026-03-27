@@ -18,12 +18,22 @@ private PortalUserRepository uRepo;
 	}
 
 @Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		//note for me. these error will not be handled by the global error interceptor class. it will get converted to a forbiden before it reaches that.. 
-		//can be customized throw a custom bean
-		PortalUser user = uRepo.findByUserName(username).orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
-		UserDetails userDetails = org.springframework.security.core.userdetails.User.builder().username(username).password(user.getPassword()).roles(user.getRoles().toArray(new String[0])).build();
-		return userDetails;
-	}
+public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    PortalUser user = uRepo.findByUserName(username)
+        .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    
+    // blocca l'accesso se bannato
+    if (user.isBanned()) {
+        throw new UsernameNotFoundException("Account bannato. Contatta l'amministratore.");
+    }
+    
+    return org.springframework.security.core.userdetails.User.builder()
+        .username(username)
+        .password(user.getPassword())
+        .roles(user.getRoles().toArray(new String[0]))
+        .build();
+}
+
+	
   
 }
