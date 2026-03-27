@@ -21,6 +21,7 @@ import jakarta.validation.Valid;
 
 import com.generation.localpro.mapper.PortalUserMapper;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -55,7 +56,7 @@ public class PublicController {
     }
 
     @GetMapping("/allOperationList")
-    public ResponseEntity<List<OperationToListDTO>> getAllOperation() {
-        return ResponseEntity.ok(operationService.getAll());
-    }
+      public ResponseEntity<List<OperationToListDTO>> getAllOperation(@RequestParam(required = false) String city) {
+    return ResponseEntity.ok(operationService.getAll(city));
+}
 }

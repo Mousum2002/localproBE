@@ -18,8 +18,20 @@ private final OperationTypeByVendorRepository vendorRepo;
     private final OperationToListMapper mapper;
 
  @Transactional(readOnly = true)
-public List<OperationToListDTO> getAll() {
-    return mapper.toDtos(vendorRepo.findAllWithDetails()); 
+public List<OperationToListDTO> getAll(String city) {
+    List<OperationToListDTO> allOperations = mapper.toDtos(vendorRepo.findAllWithDetails());
+
+    if (city == null || city.isBlank()) {
+        return allOperations;
+    }
+
+    // Definiamo la variabile che mancava
+    String searchCity = city.trim();
+
+    return allOperations.stream()
+            .filter(op -> op.getCity() != null && 
+                          op.getCity().trim().equalsIgnoreCase(searchCity))
+            .toList();
 }
     
 }
