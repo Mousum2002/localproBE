@@ -54,7 +54,7 @@ public class PublicController {
     return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/AllOpeationList")
+    @GetMapping("/allOperationList")
     public ResponseEntity<List<OperationToListDTO>> getAllOperation() {
         return ResponseEntity.ok(operationService.getAll());
     }
