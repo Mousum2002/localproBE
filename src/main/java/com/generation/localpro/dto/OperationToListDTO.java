@@ -32,4 +32,7 @@ public class OperationToListDTO {
     @NotNull(message = "La descrizione non puo essere vuota")
     private String description;
 
+   @NotNull(message = "La città non puo essere vuota")
+    private String city;
+
 }

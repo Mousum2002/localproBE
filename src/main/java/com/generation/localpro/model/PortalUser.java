@@ -2,8 +2,6 @@ package com.generation.localpro.model;
 
 import java.util.List;
 
-import org.springframework.stereotype.Indexed;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -51,8 +49,8 @@ public class PortalUser {
     private String lastName;
     private String profileImage;
     private String bio;
-    private double x;
-    private double y;
+    private int x;
+    private int y;
     
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
