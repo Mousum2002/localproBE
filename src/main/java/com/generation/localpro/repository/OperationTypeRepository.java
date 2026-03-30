@@ -14,8 +14,9 @@ public interface OperationTypeRepository extends JpaRepository<OperationType, In
 {
     List<OperationTypeByVendor> findByUserId(Integer userId);
 
-    @Query("SELECT DISTINCT o FROM OperationType o JOIN o.tags t WHERE LOWER(t) LIKE LOWER(CONCAT('%', :tag, '%')) OR LOWER(o.name) LIKE LOWER(CONCAT('%', :tag, '%'))")
-    List<OperationType> findByOperationType(@Param("tag") String tag);
-
+    @Query("SELECT DISTINCT o FROM OperationType o LEFT JOIN o.tags t " +
+       "WHERE LOWER(o.name) LIKE LOWER(CONCAT('%', :tag, '%')) " +
+       "OR LOWER(t) LIKE LOWER(CONCAT('%', :tag, '%'))")
+List<OperationType> findByOperationType(@Param("tag") String tag);
 
 }

@@ -30,6 +30,7 @@ public class OperationType {
     
     @ElementCollection
     private List<String> tags;
+    private String category;
     private String description;
     @OneToMany(mappedBy = "operationType", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OperationTypeByVendor> operationsProvided;
