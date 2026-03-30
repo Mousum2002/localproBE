@@ -19,6 +19,7 @@ public interface OperationToListMapper {
     @Mapping(source = "operationType.description",  target = "description")
     @Mapping(source = "user.reviews",               target = "ratingAvg", qualifiedByName = "calcRatingAvg")
     @Mapping(source = "user.city",                  target = "city")
+    @Mapping(source = "operationType.category",  target = "category")
     OperationToListDTO toDto(OperationTypeByVendor entity);
 
     List<OperationToListDTO> toDtos(List<OperationTypeByVendor> entities);
