@@ -22,4 +22,5 @@ public class PortalUserResponseDTO {
     private Double x;
     private Double y;
     private boolean banned;
+    private List<ReviewResponseDTO> reviews;
 }

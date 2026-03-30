@@ -22,9 +22,6 @@ public class PortalUserController {
         this.portalUserMapper = portalUserMapper;
     }
 
-
-    
-
     @PutMapping("/{id}")
     public PortalUserResponseDTO update(@PathVariable Integer id,
                                         @Valid @RequestBody PortalUserRequestDTO requestDto) {
@@ -42,10 +39,5 @@ public class PortalUserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         portalUserService.delete(id);
-    }
-
-    @DeleteMapping("/{id}/ban")
-    public void banUser(@PathVariable Integer id) {
-        portalUserService.banUser(id);
     }
 }
