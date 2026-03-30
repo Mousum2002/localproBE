@@ -21,10 +21,12 @@ public class PortalUserService {
     private final PortalUserMapper portalUserMapper;
 
 
+
     public PortalUserService(PortalUserRepository portalUserRepository, PasswordEncoder passwordEncoder, PortalUserMapper portalUserMapper) {
         this.portalUserRepository = portalUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.portalUserMapper = portalUserMapper;
+        
     }
 
     public PortalUser create(PortalUser portalUser) {
@@ -84,23 +86,10 @@ public class PortalUserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userName));
     }
 
-    public void banUser(Integer id) {
-        PortalUser user = portalUserRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        if (user.isBanned()) {
-            throw new IllegalStateException("User is already banned");
-        }
-        user.setBanned(true);
-        portalUserRepository.save(user);
+    public PortalUserResponseDTO banUser(String userName) {
+        PortalUser user = findByUserName(userName);
+        user.setBanned(!user.isBanned());
+        return portalUserMapper.toResponseDto( portalUserRepository.save(user));
     }
 
-    public void unbanUser(Integer id) {
-        PortalUser user = portalUserRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        if (!user.isBanned()) {
-            throw new IllegalStateException("User is not banned");
-        }
-        user.setBanned(false);
-        portalUserRepository.save(user);
-    }
 }
