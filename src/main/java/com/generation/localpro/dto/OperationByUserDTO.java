@@ -1,7 +1,6 @@
 package com.generation.localpro.dto;
 
 import com.generation.localpro.model.OperationStatus;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

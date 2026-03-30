@@ -34,5 +34,7 @@ public class OperationToListDTO {
 
    @NotNull(message = "La città non puo essere vuota")
     private String city;
+    
+    
 
 }

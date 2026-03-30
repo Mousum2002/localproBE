@@ -31,5 +31,4 @@ public class OperationTypeDTO {
     @NotBlank(message = "La descrizione è obbligatoria")
     private String description;
 
-    
 }

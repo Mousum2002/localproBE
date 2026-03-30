@@ -2,6 +2,7 @@ package com.generation.localpro.Controller;
 
 import com.generation.localpro.Service.ReviewService;
 import com.generation.localpro.dto.ReviewDTO;
+import com.generation.localpro.dto.ReviewResponseDTO;
 import com.generation.localpro.mapper.ReviewMapper;
 import com.generation.localpro.model.Review;
 import jakarta.validation.Valid;
@@ -25,28 +26,28 @@ public class ReviewController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ReviewDTO create(@Valid @RequestBody ReviewDTO dto) {
+    public ReviewResponseDTO  create(@Valid @RequestBody ReviewDTO dto) {
         Review created = reviewService.create(dto);
-        return reviewMapper.toDto(created);
+        return reviewMapper.toResponseDto(created);
     }
 
     @PutMapping("/{id}")
-    public ReviewDTO update(@PathVariable Integer id, @Valid @RequestBody ReviewDTO dto) {
+    public ReviewResponseDTO  update(@PathVariable Integer id, @Valid @RequestBody ReviewDTO dto) {
         Review updated = reviewService.update(id, reviewMapper.toEntity(dto));
-        return reviewMapper.toDto(updated);
+        return reviewMapper.toResponseDto(updated);
     }
 
     @GetMapping("/{id}")
-    public ReviewDTO getById(@PathVariable Integer id) {
-        return reviewMapper.toDto(reviewService.getById(id));
+    public ReviewResponseDTO  getById(@PathVariable Integer id) {
+        return reviewMapper.toResponseDto(reviewService.getById(id));
     }
 
     @GetMapping
-    public List<ReviewDTO> getAll(@RequestParam(required = false) Integer userId) {
+    public List<ReviewResponseDTO > getAll(@RequestParam(required = false) Integer userId) {
         List<Review> reviews = (userId != null)
                 ? reviewService.getByUserId(userId)
                 : reviewService.getAll();
-        return reviews.stream().map(reviewMapper::toDto).collect(Collectors.toList());
+        return reviews.stream().map(reviewMapper::toResponseDto).collect(Collectors.toList());
     }
 
     @DeleteMapping("/{id}")

@@ -3,6 +3,7 @@ package com.generation.localpro.Service;
 import java.util.Arrays;
 import java.util.List;
 
+import com.generation.localpro.dto.PortalUserResponseDTO;
 import com.generation.localpro.exception.ResourceNotFoundException;
 import com.generation.localpro.model.PortalUser;
 import org.springframework.stereotype.Service;
@@ -10,16 +11,20 @@ import org.springframework.stereotype.Service;
 import com.generation.localpro.repository.PortalUserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.generation.localpro.mapper.PortalUserMapper;
 
 @Service
 public class PortalUserService {
 
     private final PasswordEncoder passwordEncoder;
     private final PortalUserRepository portalUserRepository;
+    private final PortalUserMapper portalUserMapper;
 
-    public PortalUserService(PortalUserRepository portalUserRepository, PasswordEncoder passwordEncoder) {
+
+    public PortalUserService(PortalUserRepository portalUserRepository, PasswordEncoder passwordEncoder, PortalUserMapper portalUserMapper) {
         this.portalUserRepository = portalUserRepository;
         this.passwordEncoder = passwordEncoder;
+        this.portalUserMapper = portalUserMapper;
     }
 
     public PortalUser create(PortalUser portalUser) {
@@ -61,8 +66,10 @@ public class PortalUserService {
                 .orElseThrow(() -> new EntityNotFoundException("Utente non trovato con id: " + id));
     }
 
-    public List<PortalUser> getAll() {
-        return portalUserRepository.findAll();
+    public List<PortalUserResponseDTO> getAll() {
+        return portalUserRepository.findAll().stream()
+        .map(portalUserMapper::toResponseDto)
+        .toList();
     }
 
     public void delete(Integer id) {

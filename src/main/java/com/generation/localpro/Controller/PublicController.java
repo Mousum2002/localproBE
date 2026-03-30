@@ -67,11 +67,8 @@ public class PublicController {
     
     @GetMapping
     public ResponseEntity<List<PortalUserResponseDTO>> getAll() {
-      List<PortalUser> users = portalUserService.getAll();
-      List<PortalUserResponseDTO> response = users.stream()
-            .map(portalUserMapper::toResponseDto)
-            .collect(Collectors.toList());
-    return ResponseEntity.ok(response);
+      List<PortalUserResponseDTO> response = portalUserService.getAll();
+      return ResponseEntity.ok(response);
     }
 
     @GetMapping("/allOperationList")

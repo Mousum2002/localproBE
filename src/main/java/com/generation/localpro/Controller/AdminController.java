@@ -1,6 +1,7 @@
 package com.generation.localpro.Controller;
 
 import com.generation.localpro.Service.PortalUserService;
+import com.generation.localpro.dto.PortalUserResponseDTO;
 import com.generation.localpro.model.PortalUser;
 
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class AdminController {
 		this.uService = uService;
 	}
 	@GetMapping
-	public ResponseEntity<List<PortalUser>> getAll() {
+	public ResponseEntity<List<PortalUserResponseDTO>> getAll() {
 		// returns okay always, even with empty list
 		return ResponseEntity.ok(uService.getAll());
 	}

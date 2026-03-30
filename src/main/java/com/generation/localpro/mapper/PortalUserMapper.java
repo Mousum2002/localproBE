@@ -10,12 +10,11 @@ import com.generation.localpro.dto.PortalUserRequestDTO;;
 @Mapper(componentModel = "spring")
 public interface PortalUserMapper {
 
-    // Entity → ResponseDTO (no password exposed)
+    @Mapping(target = "banned", source = "banned") // explicit after rename
     PortalUserResponseDTO toResponseDto(PortalUser entity);
 
-    // RequestDTO → Entity (id is auto-generated, collections managed separately)
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "reviews", ignore = true)
-    @Mapping(target = "operationsProvided", ignore = true)
+    @Mapping(target = "id",                  ignore = true)
+    @Mapping(target = "reviews",             ignore = true)
+    @Mapping(target = "operationsProvided",  ignore = true)
     PortalUser toEntity(PortalUserRequestDTO dto);
 }

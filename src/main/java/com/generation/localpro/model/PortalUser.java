@@ -38,7 +38,7 @@ public class PortalUser {
     private String password;
     private String city;
     private String address;
-    private boolean isBanned;
+    private boolean banned;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
@@ -49,8 +49,8 @@ public class PortalUser {
     private String lastName;
     private String profileImage;
     private String bio;
-    private int x;
-    private int y;
+    private Double x;
+    private Double y;
     
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

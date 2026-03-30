@@ -31,6 +31,6 @@ public class PortalUserDTO {
     private String address;
     private List<String> roles;
     private String bio;
-    private int x;
-    private int y;
+    private Double x;
+    private Double y;
 }
