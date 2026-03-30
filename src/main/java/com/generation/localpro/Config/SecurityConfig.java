@@ -18,10 +18,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.web.cors.CorsConfiguration;
 
 import jakarta.servlet.http.HttpServletResponse;
-
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +36,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http,
             DaoAuthenticationProvider authenticationProvider) {
         return http
+         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/public/**", "/api/auth/login").permitAll() 
@@ -85,6 +89,25 @@ public class SecurityConfig {
     }
 
 
+
+     @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        
+        // This MUST match your Angular URL exactly. Do not use "*" when allowCredentials is true
+        configuration.setAllowedOrigins(List.of("http://localhost:4200")); 
+        
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        
+        // This is crucial because your Angular Auth service uses withCredentials: true
+        configuration.setAllowCredentials(true); 
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // Apply this CORS configuration to all endpoints
+        source.registerCorsConfiguration("/**", configuration); 
+        return source;
+    }
     @Bean
     DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService,PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);

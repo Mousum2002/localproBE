@@ -14,7 +14,7 @@ public class PortalUserResponseDTO {
     private String profileImage;
     private String userName;
     private String email;
-    // password intentionally excluded
+
     private String city;
     private String address;
     private List<String> roles;

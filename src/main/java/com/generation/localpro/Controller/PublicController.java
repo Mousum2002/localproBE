@@ -34,7 +34,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 
  @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @RequestMapping("/public")
 public class PublicController {
