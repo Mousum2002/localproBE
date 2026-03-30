@@ -6,6 +6,7 @@ import com.generation.localpro.model.PortalUser;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,4 +35,10 @@ public class AdminController {
 	public ResponseEntity<PortalUserResponseDTO> BanUser(@PathVariable String userName) {
 		return ResponseEntity.ok(uService.banUser(userName));
 	}
+
+	@DeleteMapping("delete/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        uService.delete(id); // Usa il metodo delete che abbiamo visto nel tuo PortalUserService
+        return ResponseEntity.noContent().build(); // Restituisce 204 No Content (standard per delete)
+    }
 }
