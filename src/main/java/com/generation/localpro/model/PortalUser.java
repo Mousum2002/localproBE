@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +31,7 @@ public class PortalUser {
     private int id;
 
     @Column(unique = true, nullable = false)
-     @NotBlank(message = "Username is required")           // ← NEW
+    @NotBlank(message = "Username is required")           // ← NEW
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
     private String userName;
 
@@ -47,6 +48,9 @@ public class PortalUser {
 
     private String firstName;
     private String lastName;
+
+    @Column(name = "profile_image", columnDefinition = "LONGTEXT") // Fondamentale per MySQL
+    @Lob // Indica a JPA che è un oggetto di grandi dimensioni (cambiato nell'aggiunta dell'immagine profilo)
     private String profileImage;
     private String bio;
     private Double x;
