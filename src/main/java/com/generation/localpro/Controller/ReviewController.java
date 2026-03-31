@@ -29,11 +29,18 @@ public class ReviewController {
         return reviewMapper.toResponseDto(created);
     }
 
-    @GetMapping
+    @GetMapping("/my/reviews")
     public List<ReviewResponseDTO > getAll() {
         List<Review> reviews = reviewService.getAll();
         return reviews.stream().map(reviewMapper::toResponseDto).toList();
     }
+    //accetta il username del vendor
+    @GetMapping("/vendor/{vendorName}")
+    public List<ReviewResponseDTO> getVendorReviews(@PathVariable String vendorId){
+        List<Review> reviews = reviewService.getVendorReviews(vendorId);
+        return reviews.stream().map(reviewMapper::toResponseDto).toList();
+    }
+
 
    
 }

@@ -25,17 +25,20 @@ public class PrenotazioneService {
     private final OperationTypeByVendorRepository serviceRepository;
     private final PrenotazioneMapper mapper;
     private final PortalUserService userService;
-    private final OperationTypeByVendorService operationTypeByVendorService;
+
 
     public PrenotazioneResponseDTO create(PrenotazioneRequestDTO dto) {
         Prenotazione p = mapper.toEntity(dto);
 
         OperationTypeByVendor service = serviceRepository.findById(dto.getServiceId())
                 .orElseThrow(() -> new RuntimeException("Servizio non trovato"));
+        PortalUser user = getCurrentUser();
+
+        if (user == service.getUser()) {
+        throw new IllegalArgumentException("Non poi prenotare te stesso");}
 
         p.setVendor(service.getUser());
-        p.setUser(userService.findByUserName(
-                SecurityContextHolder.getContext().getAuthentication().getName()));
+        p.setUser(user);
         p.setService(service);
         p.setReservationDate(LocalDateTime.now());
         p.setStatus("Creato");
@@ -50,10 +53,7 @@ public class PrenotazioneService {
         return mapper.toResponseDto(prenotazioneRepository.save(p));
     }
 
-    /**
-     * Prenotazioni USCENTI: quelle che l'utente loggato ha fatto come CLIENTE
-     * (visibile nella profile-page sotto "Servizi prenotati")
-     */
+  
     public List<PrenotazioneResponseDTO> getOutGoingPrenotazioni() {
         PortalUser user = getCurrentUser();
         return prenotazioneRepository.findAll().stream()
@@ -62,10 +62,7 @@ public class PrenotazioneService {
                 .toList();
     }
 
-    /**
-     * Prenotazioni ENTRANTI: quelle ricevute sui servizi che l'utente offre come VENDITORE
-     * (visibile nella profile-page sotto "Prenotazioni ricevute")
-     */
+
     public List<PrenotazioneResponseDTO> getIncomingPrenotazioni() {
         PortalUser user = getCurrentUser();
         return prenotazioneRepository.findAll().stream()
@@ -73,11 +70,7 @@ public class PrenotazioneService {
                 .map(mapper::toResponseDto)
                 .toList();
     }
-
-    // Mantenuto per retrocompatibilità
-    public List<PrenotazioneResponseDTO> getPrenotazioni() {
-        return getOutGoingPrenotazioni();
-    }
+    
 
     public void delete(Integer id) {
         Prenotazione p = prenotazioneRepository.findById(id)
