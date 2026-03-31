@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
@@ -33,8 +34,8 @@ public class SecurityConfig {
     String contentType = "application/json";
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http,
-            DaoAuthenticationProvider authenticationProvider) {
+SecurityFilterChain securityFilterChain(HttpSecurity http,
+        DaoAuthenticationProvider authenticationProvider) throws Exception {
         return http
          .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 
@@ -47,14 +48,22 @@ public class SecurityConfig {
                         .loginProcessingUrl("/api/auth/login")   
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .successHandler((req, res, auth) -> {
-                            res.setContentType(contentType);
-                            res.setStatus(HttpServletResponse.SC_OK);
-                            res.getWriter().write(
-                                "{\"message\":\"Login successful\",\"user\":\"" 
-                                + auth.getName() + "\"}"
-                            );
-                        })
+                        
+                       .successHandler((req, res, auth) -> {
+                        res.setContentType(contentType);
+                        res.setStatus(HttpServletResponse.SC_OK);
+
+                        String roles = auth.getAuthorities().stream()
+                                .map(a -> "\"" + a.getAuthority() + "\"")
+                                .collect(Collectors.joining(",", "[", "]"));
+
+                        res.getWriter().write(
+                            "{\"message\":\"Login successful\","
+                            + "\"user\":\"" + auth.getName() + "\","
+                            + "\"roles\":" + roles           // ← colon, not comma; roles is already a JSON array string
+                            + "}"
+                        );
+                    })
                         .failureHandler((req, res, ex) -> {
                             res.setContentType(contentType);
                             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -120,8 +129,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration config) {
-    return config.getAuthenticationManager();
+  @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
 }
 }

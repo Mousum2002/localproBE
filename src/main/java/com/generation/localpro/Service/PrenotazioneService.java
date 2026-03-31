@@ -19,7 +19,6 @@ import com.generation.localpro.model.PortalUser;
 import com.generation.localpro.model.OperationTypeByVendor;
 
 
-
 @Service
 @RequiredArgsConstructor
 public class PrenotazioneService {
@@ -27,11 +26,7 @@ public class PrenotazioneService {
     private final OperationTypeByVendorRepository serviceRepository;
     private final PrenotazioneMapper mapper;
     private final PortalUserService userService;
-    private final OperationTypeByVendorService OperationTypeByVendorService;
-
-
-
-
+  
     public PrenotazioneResponseDTO create(PrenotazioneRequestDTO dto) {
 
 
@@ -39,12 +34,17 @@ public class PrenotazioneService {
     OperationTypeByVendor service =  serviceRepository.findById(dto.getServiceId())
             .orElseThrow(() -> new RuntimeException("Servizio non trovato"));
 
+    PortalUser user = userService.findByUserName(SecurityContextHolder.getContext()
+            .getAuthentication().getName());
+    if (user == service.getUser()) {
+        throw new IllegalArgumentException("Non poi prenotare te stesso");
+    }
     p.setVendor(service.getUser());
  
     //user name dell'utente loggato
-    p.setUser(userService.findByUserName(SecurityContextHolder.getContext()
-            .getAuthentication().getName()));
+    p.setUser(user);
 
+    
     p.setService(service);
 
     p.setReservationDate(LocalDateTime.now()); 
@@ -53,13 +53,16 @@ public class PrenotazioneService {
     }
     
     public PrenotazioneResponseDTO updateStatus(int id, String status){
+        String userName = SecurityContextHolder.getContext()
+                .getAuthentication().getName();
+        
         Prenotazione p = prenotazioneRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Prenotazione non trovata"));
-            p.setStatus(status);
+        
         return mapper.toResponseDto(prenotazioneRepository.save(p));
     }
 
-    public List<PrenotazioneResponseDTO> getPrenotazioni(){
+    public List<PrenotazioneResponseDTO> getOutGoingPrenotazioni(){
         String userName = SecurityContextHolder.getContext()
                 .getAuthentication().getName();
         PortalUser user = userService.findByUserName(userName);
@@ -67,11 +70,19 @@ public class PrenotazioneService {
         return prenotazioni.stream().map(mapper::toResponseDto).toList();
     }
 
-
-
     public void delete(Integer id) {
         Prenotazione p =  prenotazioneRepository.findById(id).orElseThrow(() -> new RuntimeException("Prenotazione non trovata"));
         p.setStatus("Cancellata");
         prenotazioneRepository.save(p);
     }
+
+    public List<PrenotazioneResponseDTO> getIncomingPrenotazioni(){
+        String userName = SecurityContextHolder.getContext()
+                .getAuthentication().getName();
+        PortalUser user = userService.findByUserName(userName);
+     List<Prenotazione> prenotazioni = prenotazioneRepository.findAll().stream().filter((p)->p.getVendor() == user).toList();
+        return prenotazioni.stream().map(mapper::toResponseDto).toList();
+
+    }
+
 }

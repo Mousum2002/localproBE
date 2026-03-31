@@ -32,9 +32,9 @@ public class PronotazioneController {
     public ResponseEntity<PrenotazioneResponseDTO> creaPrenotazione(@RequestBody PrenotazioneRequestDTO prenotazione) {
         return ResponseEntity.ok(prenotazioneService.create(prenotazione));
     }
-    @GetMapping()
+    @GetMapping("/getOutoingPrenotazioni")
     public ResponseEntity<List<PrenotazioneResponseDTO>> getPrenotazione() {
-        return ResponseEntity.ok(prenotazioneService.getPrenotazioni());
+        return ResponseEntity.ok(prenotazioneService.getOutGoingPrenotazioni());
     }
     // da modifica o togliere a base cosa voglio dal front end
     @PutMapping("/update")
@@ -49,5 +49,8 @@ public class PronotazioneController {
         return ResponseEntity.noContent().build();
     }
     
-    
+    @GetMapping("/getIncomingPrenotazioni")
+    public ResponseEntity<List<PrenotazioneResponseDTO>> getIncomingPrenotazioni() {
+        return ResponseEntity.ok(prenotazioneService.getIncomingPrenotazioni());
+    }
 }

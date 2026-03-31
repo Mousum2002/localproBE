@@ -32,7 +32,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 
- @RequiredArgsConstructor
+@RequiredArgsConstructor
 
 @RestController
 @RequestMapping("/public")
@@ -42,8 +42,7 @@ public class PublicController {
     private final PortalUserMapper portalUserMapper;
     private final OperationTolistService operationService;
     private final AuthenticationManager authenticationManager; 
-
-   
+  
      @PostMapping("/register")
     public ResponseEntity<PortalUserResponseDTO> registerUser(@Valid @RequestBody PortalUserRequestDTO requestDto,HttpServletRequest request) {
         PortalUser created = portalUserService.create(portalUserMapper.toEntity(requestDto));
@@ -63,7 +62,6 @@ public class PublicController {
 
        return ResponseEntity.status(HttpStatus.CREATED).body(portalUserMapper.toResponseDto(created));
     }
-    
 
     @GetMapping("/allOperationList")
       public ResponseEntity<List<OperationToListDTO>> getAllOperation(@RequestParam(required = false) String city) {

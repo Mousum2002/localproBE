@@ -9,8 +9,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -31,28 +29,11 @@ public class ReviewController {
         return reviewMapper.toResponseDto(created);
     }
 
-    @PutMapping("/{id}")
-    public ReviewResponseDTO  update(@PathVariable Integer id, @Valid @RequestBody ReviewDTO dto) {
-        Review updated = reviewService.update(id, reviewMapper.toEntity(dto));
-        return reviewMapper.toResponseDto(updated);
-    }
-
-    @GetMapping("/{id}")
-    public ReviewResponseDTO  getById(@PathVariable Integer id) {
-        return reviewMapper.toResponseDto(reviewService.getById(id));
-    }
-
     @GetMapping
-    public List<ReviewResponseDTO > getAll(@RequestParam(required = false) Integer userId) {
-        List<Review> reviews = (userId != null)
-                ? reviewService.getByUserId(userId)
-                : reviewService.getAll();
-        return reviews.stream().map(reviewMapper::toResponseDto).collect(Collectors.toList());
+    public List<ReviewResponseDTO > getAll() {
+        List<Review> reviews = reviewService.getAll();
+        return reviews.stream().map(reviewMapper::toResponseDto).toList();
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id) {
-        reviewService.delete(id);
-    }
+   
 }
