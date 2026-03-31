@@ -12,18 +12,20 @@ public class PrenotazioneResponseDTO {
 
     private Integer id;
 
-    // vendor info (flat — no full PortalUser to avoid cycles)
+    // vendor info
     private Integer vendorId;
-    private String vendorUserName;
+    private String  vendorUserName;
+    private String  vendorCity;          // aggiunto
 
-
+    // service info
     private Integer serviceId;
-    private String serviceOperationName;
+    private String  serviceOperationName;
+    private String  serviceDescription;  // aggiunto
     private Integer servicePrice;
 
     // client info
     private Integer userId;
-    private String userUserName;
+    private String  userUserName;
 
     private LocalDateTime reservationDate;
     private String status;

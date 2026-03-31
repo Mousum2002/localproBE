@@ -14,6 +14,8 @@ public class OperationToListDTO {
     
     private Integer id;
 
+    private Integer userId;
+
     @NotBlank(message = "Lo username non puo essere vuoto")
     private String userName;
 
@@ -37,5 +39,7 @@ public class OperationToListDTO {
     
     @NotNull(message = "La categoria non puo essere vuota")
     private String category;
+
+    private String profileImage;
 
 }

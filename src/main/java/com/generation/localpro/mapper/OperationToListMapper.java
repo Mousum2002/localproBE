@@ -14,12 +14,14 @@ import java.util.List;
 public interface OperationToListMapper {
 
     @Mapping(source = "user.userName",              target = "userName")
+    @Mapping(source = "user.id",                    target = "userId") 
     @Mapping(source = "user.x",                     target = "x")
     @Mapping(source = "user.y",                     target = "y")
     @Mapping(source = "operationType.description",  target = "description")
     @Mapping(source = "user.reviews",               target = "ratingAvg", qualifiedByName = "calcRatingAvg")
     @Mapping(source = "user.city",                  target = "city")
     @Mapping(source = "operationType.name",  target = "category")
+    @Mapping(source = "user.profileImage",          target = "profileImage")
     OperationToListDTO toDto(OperationTypeByVendor entity);
 
     List<OperationToListDTO> toDtos(List<OperationTypeByVendor> entities);

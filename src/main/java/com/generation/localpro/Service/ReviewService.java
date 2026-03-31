@@ -1,6 +1,7 @@
 package com.generation.localpro.Service;
 
 import com.generation.localpro.dto.ReviewDTO;
+
 import com.generation.localpro.model.PortalUser;
 import com.generation.localpro.model.Review;
 import com.generation.localpro.repository.ReviewRepository;
@@ -20,9 +21,6 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final PortalUserService userService;
     private final ReviewMapper reviewMapper;
-
-
-
 
 
     public Review create(ReviewDTO dto) {
@@ -47,6 +45,10 @@ public class ReviewService {
     // Requires: List<Review> findByUserId(Integer userId); in the repository
     public List<Review> getByUserId(Integer userId) {
         return reviewRepository.findByUserId(userId);
+    }
+
+    public List<Review> getVendorReviews(String vendorName) {
+        return reviewRepository.findAll().stream().filter((r)->r.getUser().getUserName().equalsIgnoreCase(vendorName)).toList();
     }
 
 
