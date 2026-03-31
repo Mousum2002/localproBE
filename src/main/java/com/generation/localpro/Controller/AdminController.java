@@ -25,18 +25,18 @@ public class AdminController {
 	public AdminController(PortalUserService uService) {
 		this.uService = uService;
 	}
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<PortalUserResponseDTO>> getAll() {
 		// returns okay always, even with empty list
 		return ResponseEntity.ok(uService.getAll());
 	}
 
-	@PutMapping("ban/{userName}")
+	@PutMapping("/ban/{userName}")
 	public ResponseEntity<PortalUserResponseDTO> banUser(@PathVariable String userName) {
 		return ResponseEntity.ok(uService.banUser(userName));
 	}
 
-	@DeleteMapping("delete/{id}")
+	@DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         uService.delete(id); // Usa il metodo delete che abbiamo visto nel tuo PortalUserService
         return ResponseEntity.noContent().build(); // Restituisce 204 No Content (standard per delete)
