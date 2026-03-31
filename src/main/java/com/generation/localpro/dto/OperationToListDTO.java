@@ -14,6 +14,8 @@ public class OperationToListDTO {
     
     private Integer id;
 
+    private Integer userId;
+
     @NotBlank(message = "Lo username non puo essere vuoto")
     private String userName;
 
