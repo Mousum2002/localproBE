@@ -18,10 +18,10 @@ public class OperationToListDTO {
     private String userName;
 
     @NotNull(message = "La coordinata x non puo essere vuota")
-    private Integer x;
+    private double x;
 
     @NotNull(message = "La coordinata y non puo essere vuota")
-    private Integer y;
+    private double y;
 
     @NotNull(message = "La media dei rating non puo essere vuota")
     private Integer ratingAvg;
