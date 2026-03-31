@@ -1,7 +1,7 @@
 package com.generation.localpro.Controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,11 +64,6 @@ public class PublicController {
        return ResponseEntity.status(HttpStatus.CREATED).body(portalUserMapper.toResponseDto(created));
     }
     
-    @GetMapping
-    public ResponseEntity<List<PortalUserResponseDTO>> getAll() {
-      List<PortalUserResponseDTO> response = portalUserService.getAll();
-      return ResponseEntity.ok(response);
-    }
 
     @GetMapping("/allOperationList")
       public ResponseEntity<List<OperationToListDTO>> getAllOperation(@RequestParam(required = false) String city) {

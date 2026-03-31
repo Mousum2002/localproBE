@@ -30,6 +30,7 @@ public class Prenotazione {
     private PortalUser vendor;
 
     @NotNull(message = "Il servizio è obbligatorio")   
+    @ManyToOne
     @JoinColumn(name = "service_id")
     private OperationTypeByVendor service;
 

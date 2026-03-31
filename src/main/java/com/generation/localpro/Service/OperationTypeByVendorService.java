@@ -55,7 +55,7 @@ public class OperationTypeByVendorService {
     }
 
     public List<OperationTypeByVendor> getAll() {
-        return repository.findAll();
+        return repository.findAll().stream().filter((o)->o.getUser().getUserName().equalsIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName())).toList();
     }
 
     // Requires: List<OperationTypeByVendor> findByUserId(Integer vendorId); in the repository
@@ -69,9 +69,13 @@ public class OperationTypeByVendorService {
     }
 
     public void delete(Integer id) {
-        if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Voce non trovata con id: " + id);
+
+        OperationTypeByVendor entity = repository.findById(id).orElseThrow(()-> new IllegalArgumentException("Voce non trovata con id: " + id));
+        if (entity.getUser().getUserName().equalsIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            repository.deleteById(id);
         }
-        repository.deleteById(id);
+        else{
+           throw new IllegalArgumentException("userNon valido, parlo operationtypebyvendor service");
+        }
     }
 }

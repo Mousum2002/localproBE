@@ -35,6 +35,7 @@ public class PortalUserService {
         }
         portalUser.setPassword(passwordEncoder.encode(portalUser.getPassword()));
         portalUser.setRoles(Arrays.asList("USER"));
+        portalUser.setBanned(false);
         return portalUserRepository.save(portalUser);
     }
 

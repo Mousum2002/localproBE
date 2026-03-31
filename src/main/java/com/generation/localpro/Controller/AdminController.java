@@ -2,10 +2,10 @@ package com.generation.localpro.Controller;
 
 import com.generation.localpro.Service.PortalUserService;
 import com.generation.localpro.dto.PortalUserResponseDTO;
-import com.generation.localpro.model.PortalUser;
+
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.PathVariable;
 
 
@@ -32,7 +32,7 @@ public class AdminController {
 	}
 
 	@PutMapping("ban/{userName}")
-	public ResponseEntity<PortalUserResponseDTO> BanUser(@PathVariable String userName) {
+	public ResponseEntity<PortalUserResponseDTO> banUser(@PathVariable String userName) {
 		return ResponseEntity.ok(uService.banUser(userName));
 	}
 
