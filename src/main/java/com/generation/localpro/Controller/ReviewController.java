@@ -36,8 +36,8 @@ public class ReviewController {
     }
     //accetta il username del vendor
     @GetMapping("/vendor/{vendorName}")
-    public List<ReviewResponseDTO> getVendorReviews(@PathVariable String vendorId){
-        List<Review> reviews = reviewService.getVendorReviews(vendorId);
+    public List<ReviewResponseDTO> getVendorReviews(@PathVariable String vendorName){
+        List<Review> reviews = reviewService.getVendorReviews(vendorName);
         return reviews.stream().map(reviewMapper::toResponseDto).toList();
     }
 
