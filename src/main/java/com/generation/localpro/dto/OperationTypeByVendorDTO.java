@@ -11,13 +11,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OperationTypeByVendorDTO {
 
-     private Integer id;
-
+    private Integer id;
 
     @NotNull(message = "L'ID del tipo di operazione è obbligatorio")
     private Integer operationTypeId;
 
     @Min(value = 0, message = "Il prezzo non può essere negativo")
     private int price;
-    
+
+    // Campi aggiunti per mostrare le info complete nel frontend
+    private String operationTypeName;
+    private String operationTypeDescription;
+    private String vendorUserName;
+    private String vendorCity;
 }
