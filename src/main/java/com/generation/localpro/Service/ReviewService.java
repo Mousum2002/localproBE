@@ -1,7 +1,7 @@
 package com.generation.localpro.Service;
 
 import com.generation.localpro.dto.ReviewDTO;
-import com.generation.localpro.mapper.OperationToListMapperImpl;
+
 import com.generation.localpro.model.PortalUser;
 import com.generation.localpro.model.Review;
 import com.generation.localpro.repository.ReviewRepository;
@@ -18,7 +18,6 @@ import com.generation.localpro.mapper.ReviewMapper;
 @RequiredArgsConstructor
 public class ReviewService {
 
-    private final OperationToListMapperImpl operationToListMapperImpl;
     private final ReviewRepository reviewRepository;
     private final PortalUserService userService;
     private final ReviewMapper reviewMapper;
