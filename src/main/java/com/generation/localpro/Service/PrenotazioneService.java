@@ -83,4 +83,16 @@ public class PrenotazioneService {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         return userService.findByUserName(userName);
     }
+
+
+    public List<PrenotazioneResponseDTO> getPrenotazioni() {
+    String userName = SecurityContextHolder.getContext()
+        .getAuthentication().getName();
+    PortalUser user = userService.findByUserName(userName);
+    return prenotazioneRepository.findAll().stream()
+        .filter(p -> p.getUser().getId() == user.getId()) // ← fix: confronta id non oggetti
+        .map(mapper::toResponseDto)
+        .toList();
+}
+
 }
