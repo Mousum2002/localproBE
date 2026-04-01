@@ -29,4 +29,5 @@ public class PrenotazioneResponseDTO {
 
     private LocalDateTime reservationDate;
     private String status;
+    private String note;
 }

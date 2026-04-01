@@ -26,4 +26,5 @@ public interface PrenotazioneMapper {
     @Mapping(target = "user",            ignore = true)
     @Mapping(target = "reservationDate", ignore = true)
     Prenotazione toEntity(PrenotazioneRequestDTO dto);
+
 }

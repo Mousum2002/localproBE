@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.localpro.Service.OperationTolistService;
+import com.generation.localpro.Service.OperationTypeService;
+import com.generation.localpro.Service.ReviewService;
+import com.generation.localpro.dto.OperationTypeDTO;
+import com.generation.localpro.mapper.OperationTypeMapper;
+import com.generation.localpro.mapper.ReviewMapper;
 import com.generation.localpro.Service.PortalUserService;
 import com.generation.localpro.dto.OperationToListDTO;
 import com.generation.localpro.dto.PortalUserRequestDTO;
@@ -45,6 +50,10 @@ public class PublicController {
     private final OperationTolistService operationService;
     private final OperationTypeByVendorRepository vendorOperationRepository;
     private final AuthenticationManager authenticationManager;
+    private final OperationTypeService operationTypeService;
+    private final OperationTypeMapper operationTypeMapper;
+    private final ReviewService reviewService;
+    private final ReviewMapper reviewMapper;
 
     @PostMapping("/register")
     public ResponseEntity<PortalUserResponseDTO> registerUser(
@@ -127,5 +136,27 @@ public class PublicController {
                 .build();
 
         return ResponseEntity.ok(profile);
+    }
+
+    // ── ENDPOINT PUBBLICI AGGIUNTIVI ────────────────────────
+
+    // Lista categorie — usata da create-service e profile-page senza auth
+    @GetMapping("/operation-types")
+    public ResponseEntity<List<OperationTypeDTO>> getAllOperationTypes() {
+        return ResponseEntity.ok(
+            operationTypeService.getAll().stream()
+                .map(operationTypeMapper::toDto)
+                .toList()
+        );
+    }
+
+    // Recensioni di un vendor — usata da profile-page senza auth
+    @GetMapping("/reviews/vendor/{vendorName}")
+    public ResponseEntity<List<ReviewResponseDTO>> getVendorReviews(@PathVariable String vendorName) {
+        return ResponseEntity.ok(
+            reviewService.getVendorReviews(vendorName).stream()
+                .map(reviewMapper::toResponseDto)
+                .toList()
+        );
     }
 }
