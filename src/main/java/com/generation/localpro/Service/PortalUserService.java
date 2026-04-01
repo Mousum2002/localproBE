@@ -77,14 +77,21 @@ public class PortalUserService {
         .toList();
     }
 
+    @org.springframework.transaction.annotation.Transactional
     public void delete(Integer id) {
         PortalUser user = portalUserRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Utente non trovato con id: " + id));
 
-        // elimina prima le prenotazioni collegate (come cliente e come vendor)
+        // 1. elimina prenotazioni dove il servizio appartiene a questo utente
+        prenotazioneRepository.deleteByServiceUserId(id);
+
+        // 2. elimina prenotazioni dove l'utente è cliente
         prenotazioneRepository.deleteAll(prenotazioneRepository.findByUser(user));
+
+        // 3. elimina prenotazioni dove l'utente è vendor
         prenotazioneRepository.deleteAll(prenotazioneRepository.findByVendor(user));
 
+        // 4. ora si può eliminare l'utente (cascade elimina review e operationsProvided)
         portalUserRepository.deleteById(id);
     }
 
