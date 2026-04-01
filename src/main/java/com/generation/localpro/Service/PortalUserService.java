@@ -8,6 +8,7 @@ import com.generation.localpro.exception.ResourceNotFoundException;
 import com.generation.localpro.model.PortalUser;
 import org.springframework.stereotype.Service;
 import com.generation.localpro.repository.PortalUserRepository;
+import com.generation.localpro.repository.PrenotazioneRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.generation.localpro.mapper.PortalUserMapper;
@@ -18,13 +19,15 @@ public class PortalUserService {
     private final PasswordEncoder passwordEncoder;
     private final PortalUserRepository portalUserRepository;
     private final PortalUserMapper portalUserMapper;
+    private final PrenotazioneRepository prenotazioneRepository;
 
 
 
-    public PortalUserService(PortalUserRepository portalUserRepository, PasswordEncoder passwordEncoder, PortalUserMapper portalUserMapper) {
+    public PortalUserService(PortalUserRepository portalUserRepository, PasswordEncoder passwordEncoder, PortalUserMapper portalUserMapper, PrenotazioneRepository prenotazioneRepository) {
         this.portalUserRepository = portalUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.portalUserMapper = portalUserMapper;
+        this.prenotazioneRepository = prenotazioneRepository;
         
     }
 
@@ -75,12 +78,13 @@ public class PortalUserService {
     }
 
     public void delete(Integer id) {
-        if (!portalUserRepository.existsById(id)) {
-            throw new EntityNotFoundException("Utente non trovato con id: " + id);
-        }
+        PortalUser user = portalUserRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Utente non trovato con id: " + id));
 
+        // elimina prima le prenotazioni collegate (come cliente e come vendor)
+        prenotazioneRepository.deleteAll(prenotazioneRepository.findByUser(user));
+        prenotazioneRepository.deleteAll(prenotazioneRepository.findByVendor(user));
 
-        //andrebbe fatto un soft delete
         portalUserRepository.deleteById(id);
     }
 
