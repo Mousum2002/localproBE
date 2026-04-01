@@ -44,10 +44,6 @@ public class ReviewController {
                 .stream().map(reviewMapper::toResponseDto).toList();
     }
 
-    // Cancella una recensione — solo chi l'ha scritta O il vendor recensito
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Integer id, Authentication auth) {
-        reviewService.deleteIfOwner(id, auth.getName());
-    }
+
+   
 }

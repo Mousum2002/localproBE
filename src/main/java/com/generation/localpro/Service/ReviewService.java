@@ -53,12 +53,12 @@ public class ReviewService {
         return reviewRepository.findAll().stream().filter((r)->r.getUser().getUserName().equalsIgnoreCase(vendorName)).toList();
     }
 
-    public void deleteIfOwner(Integer reviewId, String userName) {
-    Review review = reviewRepository.findById(reviewId)
-        .orElseThrow(() -> new EntityNotFoundException("Recensione non trovata"));
-    // chiunque può cancellare solo le proprie recensioni
-    // il profilo del vendor può cancellare le recensioni su se stesso
+    public void deleteById(Integer reviewId) {
     reviewRepository.deleteById(reviewId);
-}
+    }
+
+
+
+
 
 }
