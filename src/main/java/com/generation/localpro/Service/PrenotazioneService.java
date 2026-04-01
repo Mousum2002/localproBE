@@ -40,7 +40,8 @@ public class PrenotazioneService {
         p.setVendor(service.getUser());
         p.setUser(user);
         p.setService(service);
-        p.setReservationDate(LocalDateTime.now());
+        // usa la data scelta dal cliente se presente, altrimenti now
+        p.setReservationDate(dto.getReservationDate() != null ? dto.getReservationDate() : LocalDateTime.now());
         p.setStatus("Creato");
 
         return mapper.toResponseDto(prenotazioneRepository.save(p));
