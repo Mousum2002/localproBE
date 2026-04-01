@@ -34,7 +34,7 @@ public class PrenotazioneService {
                 .orElseThrow(() -> new RuntimeException("Servizio non trovato"));
         PortalUser user = getCurrentUser();
 
-        if (user == service.getUser()) {
+        if (user.getId() == service.getUser().getId()) {
         throw new IllegalArgumentException("Non poi prenotare te stesso");}
 
         p.setVendor(service.getUser());

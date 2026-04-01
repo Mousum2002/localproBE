@@ -12,6 +12,7 @@ import com.generation.localpro.repository.PrenotazioneRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.generation.localpro.mapper.PortalUserMapper;
+import jakarta.transaction.Transactional;
 
 @Service
 public class PortalUserService {
@@ -41,29 +42,14 @@ public class PortalUserService {
         return portalUserRepository.save(portalUser);
     }
 
-    public PortalUser update(Integer id, PortalUser updated) {
-        PortalUser existing = portalUserRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Utente non trovato"));
-
-        existing.setUserName(updated.getUserName());
-        existing.setEmail(updated.getEmail());
-        existing.setCity(updated.getCity());
-        existing.setAddress(updated.getAddress());
-        existing.setBio(updated.getBio());
-        existing.setFirstName(updated.getFirstName());
-        existing.setLastName(updated.getLastName());
-        existing.setProfileImage(updated.getProfileImage());
-        existing.setX(updated.getX());
-        existing.setY(updated.getY());
-        // ruoli NON aggiornati — si cambiano solo da admin
+    public PortalUser update(PortalUser updated) {
+       
 
         if (updated.getPassword() != null
-                && !updated.getPassword().equals("UNCHANGED")
                 && !updated.getPassword().isBlank()) {
-            existing.setPassword(passwordEncoder.encode(updated.getPassword()));
+            updated.setPassword(passwordEncoder.encode(updated.getPassword()));
         }
-
-        return portalUserRepository.save(existing);
+        return portalUserRepository.save(updated);
     }
 
     public PortalUser getById(Integer id) {
@@ -77,21 +63,15 @@ public class PortalUserService {
         .toList();
     }
 
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public void delete(Integer id) {
-        PortalUser user = portalUserRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Utente non trovato con id: " + id));
+        if (!portalUserRepository.existsById(id)) {
+            throw new EntityNotFoundException("Utente non trovato con id: " + id);
+        }
 
-        // 1. elimina prenotazioni dove il servizio appartiene a questo utente
         prenotazioneRepository.deleteByServiceUserId(id);
-
-        // 2. elimina prenotazioni dove l'utente è cliente
-        prenotazioneRepository.deleteAll(prenotazioneRepository.findByUser(user));
-
-        // 3. elimina prenotazioni dove l'utente è vendor
-        prenotazioneRepository.deleteAll(prenotazioneRepository.findByVendor(user));
-
-        // 4. ora si può eliminare l'utente (cascade elimina review e operationsProvided)
+        prenotazioneRepository.deleteByUserId(id);
+        prenotazioneRepository.deleteByVendorId(id);
         portalUserRepository.deleteById(id);
     }
 

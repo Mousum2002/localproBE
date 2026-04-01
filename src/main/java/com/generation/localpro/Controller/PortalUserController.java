@@ -22,10 +22,10 @@ public class PortalUserController {
         this.portalUserMapper = portalUserMapper;
     }
 
-    @PutMapping("/{id}")
-    public PortalUserResponseDTO update(@PathVariable Integer id,
+    @PutMapping()
+    public PortalUserResponseDTO update(
                                         @Valid @RequestBody PortalUserRequestDTO requestDto) {
-        PortalUser updated = portalUserService.update(id, portalUserMapper.toEntity(requestDto));
+        PortalUser updated = portalUserService.update(portalUserMapper.toEntity(requestDto));
         return portalUserMapper.toResponseDto(updated);
     }
 

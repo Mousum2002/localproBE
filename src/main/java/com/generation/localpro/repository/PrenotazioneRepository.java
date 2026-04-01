@@ -10,11 +10,16 @@ import java.util.List;
 
 public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Integer> {
 
-    List<Prenotazione> findByUser(PortalUser user);
-    List<Prenotazione> findByVendor(PortalUser vendor);
 
-    // elimina tutte le prenotazioni che referenziano un servizio dell'utente
-    @Modifying
+
+ @Modifying
     @Query("DELETE FROM Prenotazione p WHERE p.service.user.id = :userId")
     void deleteByServiceUserId(@Param("userId") Integer userId);
-}
+
+    @Modifying
+    @Query("DELETE FROM Prenotazione p WHERE p.user.id = :userId")
+    void deleteByUserId(@Param("userId") Integer userId);
+
+    @Modifying
+    @Query("DELETE FROM Prenotazione p WHERE p.vendor.id = :userId")
+    void deleteByVendorId(@Param("userId") Integer userId);}
