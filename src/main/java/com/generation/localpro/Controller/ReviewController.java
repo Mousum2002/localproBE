@@ -31,11 +31,6 @@ public class ReviewController {
         return reviewMapper.toResponseDto(created);
     }
 
-    // Le mie recensioni scritte
-    @GetMapping("/my/reviews")
-    public List<ReviewResponseDTO> getMyReviews() {
-        return reviewService.getAll().stream().map(reviewMapper::toResponseDto).toList();
-
    @GetMapping("/my/reviews")
     public List<ReviewResponseDTO > getAll() {
         List<Review> reviews = reviewService.getAll();
