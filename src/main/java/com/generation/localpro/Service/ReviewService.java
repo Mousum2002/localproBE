@@ -22,12 +22,14 @@ public class ReviewService {
     private final PortalUserService userService;
     private final ReviewMapper reviewMapper;
 
-
     public Review create(ReviewDTO dto) {
-    String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
-    PortalUser user = userService.findByUserName(currentUsername);
+    PortalUser vendorUser = userService.getById(dto.getUserId());
+    PortalUser currentUser = userService.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+    if (vendorUser == currentUser) {
+        throw new IllegalArgumentException("Non è un essercizio di autovalutazione! ");
+    }
     Review review = reviewMapper.toEntity(dto); 
-    review.setUser(user);                       
+    review.setUser(vendorUser);                       
     return reviewRepository.save(review);
 }
 

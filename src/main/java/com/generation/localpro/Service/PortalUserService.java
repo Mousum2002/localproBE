@@ -78,6 +78,9 @@ public class PortalUserService {
         if (!portalUserRepository.existsById(id)) {
             throw new EntityNotFoundException("Utente non trovato con id: " + id);
         }
+
+
+        //andrebbe fatto un soft delete
         portalUserRepository.deleteById(id);
     }
 
