@@ -21,7 +21,7 @@ public class ReviewDTO {
 
         @Min(value = 1, message = "Il rating minimo è 1")
         @Max(value = 5, message = "Il rating massimo è 5")
-        private int rating;
+        private Integer rating;
 
         @NotBlank(message = "La descrizione della recensione non può essere vuota")
         private String description;

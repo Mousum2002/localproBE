@@ -17,7 +17,7 @@ public interface PrenotazioneMapper {
     @Mapping(source = "service.operationType.description",target = "serviceDescription")
     @Mapping(source = "service.price",                    target = "servicePrice")
     @Mapping(source = "user.id",                          target = "userId")
-    @Mapping(source = "user.userName",                    target = "userUserName")
+    @Mapping(source = "user.userName",                    target = "userName")
     PrenotazioneResponseDTO toResponseDto(Prenotazione entity);
 
     @Mapping(target = "id",              ignore = true)

@@ -10,6 +10,7 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface OperationTypeByVendorMapper {
 
+    @Mapping(source = "user.id",                    target = "userId")
     @Mapping(source = "operationType.id",          target = "operationTypeId")
     @Mapping(source = "operationType.name",        target = "operationTypeName")
     @Mapping(source = "operationType.description", target = "operationTypeDescription")

@@ -22,7 +22,7 @@ public class Prenotazione {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NotNull(message = "Il venditore è obbligatorio")   
     @ManyToOne(fetch = FetchType.LAZY)

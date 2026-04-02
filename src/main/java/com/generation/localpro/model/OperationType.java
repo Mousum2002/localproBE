@@ -23,9 +23,8 @@ public class OperationType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    private int userId;
+    private Integer id;
+    
     private String name;
     
     @ElementCollection

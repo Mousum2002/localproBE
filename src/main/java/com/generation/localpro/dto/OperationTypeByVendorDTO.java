@@ -13,6 +13,9 @@ public class OperationTypeByVendorDTO {
 
     private Integer id;
 
+    // Output-only: populated from the authenticated vendor on read
+    private Integer userId;
+
     @NotNull(message = "L'ID del tipo di operazione è obbligatorio")
     private Integer operationTypeId;
 

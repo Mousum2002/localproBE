@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class PrenotazioneResponseDTO {
 
     private Integer id;
+//a cosa serve tutto sti campi?
 
     // vendor info
     private Integer vendorId;
@@ -25,7 +26,7 @@ public class PrenotazioneResponseDTO {
 
     // client info
     private Integer userId;
-    private String  userUserName;
+    private String  userName;
 
     private LocalDateTime reservationDate;
     private String status;

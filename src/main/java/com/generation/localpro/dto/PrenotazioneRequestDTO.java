@@ -15,7 +15,6 @@ public class PrenotazioneRequestDTO {
     private Integer serviceId;
 
     private String note;
-    private String status;
 
     // data preferita dal cliente
     private LocalDateTime reservationDate;

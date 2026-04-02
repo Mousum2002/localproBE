@@ -19,7 +19,7 @@ public class OperationTypeByVendor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "vendor_id")
@@ -29,5 +29,5 @@ public class OperationTypeByVendor {
     @JoinColumn(name = "operation_type_id")
     private OperationType operationType;
 
-    private int price;
+    private Integer price;
 }

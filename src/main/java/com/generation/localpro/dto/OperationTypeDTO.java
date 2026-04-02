@@ -3,7 +3,7 @@ package com.generation.localpro.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,9 +18,6 @@ import java.util.List;
 public class OperationTypeDTO {
 
    private Integer id; // null on POST (auto-generated), populated in response
-
-    @NotNull(message = "L'ID utente è obbligatorio")
-    private Integer userId;
 
     @NotBlank(message = "Il nome dell'operazione non può essere vuoto")
     private String name;

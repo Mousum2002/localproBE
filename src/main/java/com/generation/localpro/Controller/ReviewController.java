@@ -23,7 +23,7 @@ public class ReviewController {
         this.reviewMapper = reviewMapper;
     }
 
-    // Crea una recensione su un altro utente
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ReviewResponseDTO create(@Valid @RequestBody ReviewDTO dto) {
@@ -31,6 +31,7 @@ public class ReviewController {
         return reviewMapper.toResponseDto(created);
     }
 
+    //a cosa serve?
    @GetMapping("/my/reviews")
     public List<ReviewResponseDTO > getAll() {
         List<Review> reviews = reviewService.getAll();
