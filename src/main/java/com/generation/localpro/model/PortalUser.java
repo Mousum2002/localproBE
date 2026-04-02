@@ -41,6 +41,7 @@ public class PortalUser {
     private String address;
     private boolean banned;
 
+    
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")

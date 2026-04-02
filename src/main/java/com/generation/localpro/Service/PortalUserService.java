@@ -44,12 +44,19 @@ public class PortalUserService {
 
     public PortalUser update(PortalUser updated) {
        
+            PortalUser existing = portalUserRepository.findByUserName(updated.getUserName())
+                    .orElseThrow(() -> new EntityNotFoundException("Utente non trovato con id: " + updated.getUserName()));
+            existing.setEmail(updated.getEmail());
+            existing.setCity(updated.getCity());
+            existing.setAddress(updated.getAddress());
+            existing.setFirstName(updated.getFirstName());
+            existing.setLastName(updated.getLastName());
+            existing.setProfileImage(updated.getProfileImage());
+            existing.setBio(updated.getBio());
+            existing.setX(updated.getX());
+            existing.setY(updated.getY());
+            return portalUserRepository.save(existing);
 
-        if (updated.getPassword() != null
-                && !updated.getPassword().isBlank()) {
-            updated.setPassword(passwordEncoder.encode(updated.getPassword()));
-        }
-        return portalUserRepository.save(updated);
     }
 
     public PortalUser getById(Integer id) {
