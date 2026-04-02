@@ -116,8 +116,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // This MUST match your Angular URL exactly. Do not use "*" when allowCredentials is true
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); 
+
+        //the firebase link for the whitelist
+       configuration.setAllowedOrigins(List.of(
+            "http://localhost:4200",
+            "https://localpro-a15e1.web.app",
+            "https://localpro-a15e1.firebaseapp.com"
+        ));
         
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
