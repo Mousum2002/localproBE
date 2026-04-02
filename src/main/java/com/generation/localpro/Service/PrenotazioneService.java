@@ -43,6 +43,7 @@ public class PrenotazioneService {
         // usa la data scelta dal cliente se presente, altrimenti now
         p.setReservationDate(dto.getReservationDate() != null ? dto.getReservationDate() : LocalDateTime.now());
         p.setStatus("Creato");
+        p.setNote(dto.getNote());
 
         return mapper.toResponseDto(prenotazioneRepository.save(p));
     }

@@ -39,6 +39,8 @@ public class Prenotazione {
 
     private String status;
 
+    private String note;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private PortalUser user;
